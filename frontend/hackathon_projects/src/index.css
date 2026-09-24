@@ -14,25 +14,52 @@
   --bag-green: #176b3a;
   --bag-dark-green: #0f4d2a;
   --bag-light-green: #e8f3ec;
+
   --bag-beige: #f6f0df;
   --bag-light-beige: #fbf8ef;
+
   --bag-white: #ffffff;
+
   --bag-text: #26352c;
   --bag-muted: #6c757d;
   --bag-border: #e2e5df;
 }
 
-/* Main body */
+/* =========================================
+   HTML + BODY
+   ========================================= */
+
+html,
 body {
-  background: var(--bag-beige);
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bag-beige) !important;
   color: var(--bag-text);
   font-family: Arial, sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Full application */
+/* =========================================
+   ROOT APPLICATION
+   ========================================= */
+
 #root {
+  width: 100%;
   min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Every page section fills available screen */
+#root > section {
+  flex: 1;
+  width: 100%;
+  background-color: var(--bag-beige);
 }
 
 /* =========================================
@@ -42,32 +69,63 @@ body {
 .navbar {
   width: 100%;
   min-height: 70px;
-  background: var(--bag-white) !important;
+
+  background-color: var(--bag-white) !important;
   border-bottom: 1px solid var(--bag-border) !important;
+
   padding: 12px 0;
+
+  flex-shrink: 0;
+}
+
+/* Navbar container */
+.navbar > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* BagNest logo */
 .navbar-brand {
   color: var(--bag-green) !important;
+
   font-size: 24px;
   font-weight: 700;
+
+  white-space: nowrap;
+
+  margin-right: 20px;
+}
+
+/* Navigation area */
+.navbar .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-wrap: nowrap;
 }
 
 /* Navigation links */
 .navbar .nav-link {
   color: var(--bag-text);
+
   font-size: 15px;
   font-weight: 500;
+
   padding: 8px 14px;
+
   border-radius: 8px;
-  transition: 0.2s ease;
+
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
 }
 
 /* Navigation hover */
 .navbar .nav-link:hover {
   color: var(--bag-green);
-  background: var(--bag-light-green);
+  background-color: var(--bag-light-green);
 }
 
 /* =========================================
@@ -76,13 +134,6 @@ body {
 
 section {
   width: 100%;
-}
-
-/* Bootstrap container customization */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 /* =========================================
@@ -125,44 +176,57 @@ h5 {
    ========================================= */
 
 .landing-hero {
-  min-height: 620px;
+  min-height: calc(100vh - 180px);
+
   display: flex;
   align-items: center;
 }
 
-/* Main green buttons */
+/* =========================================
+   BUTTONS
+   ========================================= */
+
 .btn-success {
-  background: var(--bag-green) !important;
+  background-color: var(--bag-green) !important;
   border-color: var(--bag-green) !important;
+
   color: var(--bag-white) !important;
+
   min-height: 44px;
+
   padding: 10px 22px;
+
   border-radius: 8px;
+
   font-weight: 600;
-  transition: 0.2s ease;
+
+  transition: all 0.2s ease;
 }
 
-/* Green button hover */
 .btn-success:hover {
-  background: var(--bag-dark-green) !important;
+  background-color: var(--bag-dark-green) !important;
   border-color: var(--bag-dark-green) !important;
+
   transform: translateY(-1px);
 }
 
-/* Outline green button */
 .btn-outline-success {
   color: var(--bag-green) !important;
   border-color: var(--bag-green) !important;
+
   min-height: 44px;
+
   padding: 10px 22px;
+
   border-radius: 8px;
+
   font-weight: 600;
-  transition: 0.2s ease;
+
+  transition: all 0.2s ease;
 }
 
-/* Outline button hover */
 .btn-outline-success:hover {
-  background: var(--bag-green) !important;
+  background-color: var(--bag-green) !important;
   color: var(--bag-white) !important;
 }
 
@@ -171,16 +235,21 @@ h5 {
    ========================================= */
 
 .card {
-  background: var(--bag-white);
+  background-color: var(--bag-white);
+
   border: 1px solid var(--bag-border);
+
   border-radius: 14px;
+
   box-shadow: 0 4px 14px rgba(23, 107, 58, 0.08);
-  transition: 0.25s ease;
+
+  transition: all 0.25s ease;
 }
 
 /* Card hover */
 .card:hover {
   transform: translateY(-3px);
+
   box-shadow: 0 8px 22px rgba(23, 107, 58, 0.12);
 }
 
@@ -226,24 +295,41 @@ h5 {
 
 .form-label {
   font-weight: 600;
+
   color: var(--bag-text);
+
   margin-bottom: 7px;
 }
 
 .form-control,
 .form-select {
   min-height: 46px;
+
   border: 1px solid #d8ddd7;
+
   border-radius: 8px;
+
   padding: 10px 14px;
-  background: var(--bag-white);
+
+  background-color: var(--bag-white);
 }
 
-/* Input focus */
 .form-control:focus,
 .form-select:focus {
   border-color: var(--bag-green);
+
   box-shadow: 0 0 0 3px rgba(23, 107, 58, 0.12);
+}
+
+/* Autofill */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--bag-text);
+
+  box-shadow: 0 0 0 1000px var(--bag-white) inset;
+
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* =========================================
@@ -269,9 +355,12 @@ h5 {
 
 /* Booking status */
 .badge.bg-success {
-  background: var(--bag-green) !important;
+  background-color: var(--bag-green) !important;
+
   padding: 7px 12px;
+
   border-radius: 20px;
+
   font-weight: 500;
 }
 
@@ -301,18 +390,22 @@ h5 {
 /* Report table */
 .table {
   margin-bottom: 0;
-  background: var(--bag-white);
+
+  background-color: var(--bag-white);
 }
 
 .table th {
   color: var(--bag-muted);
+
   font-size: 14px;
   font-weight: 600;
+
   padding: 14px 16px;
 }
 
 .table td {
   padding: 14px 16px;
+
   vertical-align: middle;
 }
 
@@ -322,13 +415,21 @@ h5 {
 
 footer {
   width: 100%;
-  background: #19352a !important;
+
+  background-color: #19352a !important;
+
   padding: 30px 0;
+
+  margin-top: auto;
+
+  flex-shrink: 0;
 }
 
 footer h5 {
   color: var(--bag-white);
+
   font-size: 20px;
+
   margin-bottom: 8px;
 }
 
@@ -345,27 +446,24 @@ footer p {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bag-light-beige);
+  background-color: var(--bag-light-beige);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9bb5a3;
+  background-color: #9bb5a3;
+
   border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bag-green);
+  background-color: var(--bag-green);
 }
 
 /* =========================================
-   TABLET RESPONSIVE
+   TABLET
    ========================================= */
 
 @media (max-width: 991px) {
-
-  .container {
-    max-width: 94%;
-  }
 
   h1 {
     font-size: 40px;
@@ -376,12 +474,17 @@ footer p {
   }
 
   .landing-hero {
-    min-height: 550px;
+    min-height: calc(100vh - 160px);
   }
+
+  .navbar .nav-link {
+    padding: 8px 10px;
+  }
+
 }
 
 /* =========================================
-   MOBILE RESPONSIVE
+   MOBILE
    ========================================= */
 
 @media (max-width: 768px) {
@@ -391,12 +494,23 @@ footer p {
     padding: 10px 0;
   }
 
-  .navbar-brand {
-    font-size: 21px;
+  .navbar > .container {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
-  .container {
-    max-width: 92%;
+  .navbar-brand {
+    font-size: 21px;
+    margin-right: 10px;
+  }
+
+  .navbar .d-flex {
+    gap: 4px !important;
+  }
+
+  .navbar .nav-link {
+    font-size: 14px;
+    padding: 7px 8px;
   }
 
   h1 {
@@ -424,6 +538,7 @@ footer p {
   .btn-outline-success {
     min-height: 44px;
   }
+
 }
 
 /* =========================================
@@ -432,8 +547,27 @@ footer p {
 
 @media (max-width: 576px) {
 
-  .container {
-    max-width: 90%;
+  .navbar {
+    min-height: 58px;
+    padding: 8px 0;
+  }
+
+  .navbar > .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .navbar-brand {
+    font-size: 19px;
+  }
+
+  .navbar .d-flex {
+    gap: 1px !important;
+  }
+
+  .navbar .nav-link {
+    font-size: 12px;
+    padding: 6px 6px;
   }
 
   h1 {
@@ -448,13 +582,12 @@ footer p {
     font-size: 21px;
   }
 
-  .card {
-    padding: 5px;
+  .landing-hero {
+    padding: 45px 0;
   }
 
-  .navbar .nav-link {
-    font-size: 14px;
-    padding: 7px 10px;
+  .card {
+    padding: 5px;
   }
 
   .btn-success,
@@ -465,4 +598,27 @@ footer p {
   .table {
     font-size: 13px;
   }
+
+  .table th,
+  .table td {
+    padding: 10px 8px;
+  }
+
+}
+
+/* =========================================
+   VERY SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 400px) {
+
+  .navbar-brand {
+    font-size: 17px;
+  }
+
+  .navbar .nav-link {
+    font-size: 11px;
+    padding: 5px 4px;
+  }
+
 }
