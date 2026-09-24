@@ -7,6 +7,8 @@ import Register from "../pages/Register";
 import TravellerDashboard from "../pages/TravellerDashboard";
 // Partner dashboard-a route-la use panna import panrom
 import PartnerDashboard from "../pages/PartnerDashboard";
+// Booking page-a route-la use panna import panrom
+import Booking from "../pages/Booking";
 
 function AppRoutes() {
   // Website-la entha URL-ku entha page kaatanum nu define panrom
@@ -42,7 +44,11 @@ function AppRoutes() {
         path="/partner-dashboard"
         element={<PartnerDashboard />}
     />
- 
+     {/* "/booking/:id" URL pona Booking Page kaatum */}
+       <Route
+          path="/booking/:id"
+           element={<Booking />}
+        />
 
     </Routes>
   );
