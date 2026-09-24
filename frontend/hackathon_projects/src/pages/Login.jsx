@@ -8,6 +8,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Password show/hide panna state
+  const [showPassword, setShowPassword] = useState(false);
+
   // Login success aana dashboard-ku navigate panna
   const navigate = useNavigate();
 
@@ -89,18 +92,32 @@ function Login() {
                   />
                 </div>
 
+                {/* Password */}
                 <div className="mb-3">
                   <label className="form-label">
                     Password
                   </label>
 
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  {/* Password input + show/hide button */}
+                  <div className="input-group">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={() =>
+                        setShowPassword(!showPassword)
+                      }
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Login button */}
