@@ -12,6 +12,7 @@ import Booking from "../pages/Booking";
 import MyBookings from "../pages/MyBookings";
 import PartnerBookings from "../pages/PartnerBookings";
 import ManageStorage from "../pages/ManageStorage";
+import CheckInOut from "../pages/CheckInOut";
 
 function AppRoutes() {
   // Website-la entha URL-ku entha page kaatanum nu define panrom
@@ -66,6 +67,11 @@ function AppRoutes() {
         <Route
          path="/manage-storage"
          element={<ManageStorage />}
+        />
+
+        <Route
+        path="/check-in-out"
+        element={<CheckInOut />}
         />
     </Routes>
   );
