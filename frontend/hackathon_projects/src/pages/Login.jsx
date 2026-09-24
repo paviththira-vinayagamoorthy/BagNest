@@ -1,3 +1,5 @@
+// text a link aa maatha link import panrom
+import { Link } from "react-router-dom";
 function Login() {
   // Login page main section
   return (
@@ -66,9 +68,9 @@ function Login() {
               {/* New users registration option */}
               <p className="text-center mt-4 mb-0">
                 Don't have an account?{" "}
-                <span className="text-success fw-semibold">
-                  Register
-                </span>
+                <Link to="/register" className="text-success fw-semibold">
+                    Register
+                 </Link>
               </p>
 
             </div>

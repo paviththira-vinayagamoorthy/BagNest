@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Register() {
   // BagNest new user registration page
   return (
@@ -92,9 +94,9 @@ function Register() {
               {/* Existing users-ku login option */}
               <p className="text-center mt-4 mb-0">
                 Already have an account?{" "}
-                <span className="text-success fw-semibold">
-                  Login
-                </span>
+                  <Link to="/login" className="text-success fw-semibold">
+                       Login
+                </Link>
               </p>
 
             </div>
