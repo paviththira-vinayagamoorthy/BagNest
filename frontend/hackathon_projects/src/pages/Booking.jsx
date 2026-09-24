@@ -1,10 +1,16 @@
 import { useParams, Link } from "react-router-dom";
 import storageData from "../data/storageData";
+import { useState } from "react";
 
 function Booking() {
 
   // URL-la irukkura storage id-a eduka
   const { id } = useParams();
+
+  // Booking form values-a store panna states
+  const [bags, setBags] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   // Storage id-ku match aagura storage-a find panna
   const storage = storageData.find(
@@ -31,6 +37,33 @@ function Booking() {
         </div>
       </section>
     );
+  }
+
+  // Booking form submit-a handle panna function
+  function handleBooking(e) {
+
+    // Form submit aagumbodhu page refresh aagama stop panna
+    e.preventDefault();
+
+    // User booking details-a oru object-la store panna
+    const booking = {
+      storageId: storage.id,
+      storageName: storage.name,
+      location: storage.location,
+      price: storage.price,
+      bags,
+      startDate,
+      endDate
+    };
+
+    // Booking details-a browser localStorage-la save panna
+    localStorage.setItem(
+      "booking",
+      JSON.stringify(booking)
+    );
+
+    // Booking successful message
+    alert("Booking confirmed successfully!");
   }
 
   // Booking page main section
@@ -66,7 +99,7 @@ function Booking() {
               </div>
 
               {/* Booking details form */}
-              <form>
+              <form onSubmit={handleBooking}>
 
                 {/* Number of bags */}
                 <div className="mb-3">
@@ -79,6 +112,8 @@ function Booking() {
                     className="form-control"
                     min="1"
                     placeholder="Enter number of bags"
+                    value={bags}
+                    onChange={(e) => setBags(e.target.value)}
                   />
                 </div>
 
@@ -91,6 +126,8 @@ function Booking() {
                   <input
                     type="date"
                     className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
                   />
                 </div>
 
@@ -103,6 +140,8 @@ function Booking() {
                   <input
                     type="date"
                     className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                   />
                 </div>
 
