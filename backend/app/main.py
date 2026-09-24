@@ -8,7 +8,7 @@ from app.models.storage import StorageLocation
 from app.models.booking import Booking
 from app.models.checkin import CheckInCheckout
 
-from app.routers import auth, storage
+from app.routers import auth, storage, booking
 
 
 Base.metadata.create_all(bind=engine)
@@ -34,6 +34,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(storage.router)
+app.include_router(booking.router)
 
 
 @app.get("/")
