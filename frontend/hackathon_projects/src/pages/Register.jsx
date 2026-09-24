@@ -1,6 +1,36 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Register() {
+    
+
+  // Register form values-a store panna states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("traveller");
+
+  // Register form submit-a handle panna function
+function handleRegister(e) {
+
+  // Form submit aagumbodhu page refresh aagama stop panna
+  e.preventDefault();
+
+  // User enter panna registration details-a oru object-la store panna
+  const user = {
+    name,
+    email,
+    password,
+    role
+  };
+
+  // Registered user details-a browser localStorage-la save panna
+  localStorage.setItem(
+    "registeredUser",
+    JSON.stringify(user)
+  );
+}
+
   // BagNest new user registration page
   return (
     <section className="py-5">
@@ -27,7 +57,7 @@ function Register() {
               </div>
 
               {/* New account details enter panna form */}
-              <form>
+             <form onSubmit={handleRegister}>
 
                 <div className="mb-3">
                   <label className="form-label">
@@ -38,6 +68,8 @@ function Register() {
                     type="text"
                     className="form-control"
                     placeholder="Enter your full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
@@ -50,6 +82,8 @@ function Register() {
                     type="email"
                     className="form-control"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -62,6 +96,8 @@ function Register() {
                     type="password"
                     className="form-control"
                     placeholder="Create a password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
@@ -71,7 +107,11 @@ function Register() {
                     Register As
                   </label>
 
-                  <select className="form-select">
+                  <select
+                    className="form-select"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
                     <option value="traveller">
                       Traveller
                     </option>
@@ -94,8 +134,11 @@ function Register() {
               {/* Existing users-ku login option */}
               <p className="text-center mt-4 mb-0">
                 Already have an account?{" "}
-                  <Link to="/login" className="text-success fw-semibold">
-                       Login
+                <Link
+                  to="/login"
+                  className="text-success fw-semibold"
+                >
+                  Login
                 </Link>
               </p>
 
