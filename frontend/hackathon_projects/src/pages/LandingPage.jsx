@@ -40,16 +40,22 @@ function LandingPage() {
 
           <div className="col-md-6 text-center mt-4 mt-md-0">
 
-            {/* Temporary luggage visual */}
-            <div className="p-5 bg-white rounded shadow-sm">
-              <h3 className="text-success">
-                🧳
-              </h3>
+          {/* Luggage visual */}
+           <div className="p-5 bg-white rounded shadow-sm text-center">
+  
+          <div className="display-1 mb-3">
+            🧳
+         </div>
 
-              <p className="mb-0">
-                Safe luggage storage
-              </p>
-            </div>
+         <h3 className="text-success fw-bold">
+          Safe Luggage Storage
+         </h3>
+
+         <p className="mb-0 text-muted">
+          Store your bags safely and travel freely.
+         </p>
+
+        </div>
 
           </div>
 
