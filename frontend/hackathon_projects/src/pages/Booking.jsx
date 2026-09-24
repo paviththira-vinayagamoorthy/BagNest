@@ -1,11 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import storageData from "../data/storageData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import API_URL from "../api/api";
 
 function Booking() {
 
   // URL-la irukkura storage id-a eduka
   const { id } = useParams();
+
+  // Selected storage-a store panna state
+  const [storage, setStorage] = useState(null);
 
   // Booking form values-a store panna states
   const [bags, setBags] = useState("");
@@ -13,10 +16,36 @@ function Booking() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
-  // Storage id-ku match aagura storage-a find panna
-  const storage = storageData.find(
-    (item) => item.id === Number(id)
-  );
+  // Storage details backend-la irundhu fetch panna
+  useEffect(() => {
+
+    async function fetchStorage() {
+
+      try {
+
+        const response = await fetch(
+          `${API_URL}/storage/${id}`
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setStorage(data);
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Unable to fetch storage:",
+          error
+        );
+
+      }
+    }
+
+    fetchStorage();
+
+  }, [id]);
 
   // Storage kidaikkala-na message kaata
   if (!storage) {
@@ -41,31 +70,80 @@ function Booking() {
   }
 
   // Booking form submit-a handle panna function
-  function handleBooking(e) {
+  async function handleBooking(e) {
 
     // Form submit aagumbodhu page refresh aagama stop panna
     e.preventDefault();
 
-    // User booking details-a oru object-la store panna
-    const booking = {
-      storageId: storage.id,
-      storageName: storage.name,
-      location: storage.location,
-      price: storage.price,
-      bags,
-      bookingDate,
-      startTime,
-      endTime
-    };
+    try {
 
-    // Booking details-a browser localStorage-la save panna
-    localStorage.setItem(
-      "booking",
-      JSON.stringify(booking)
-    );
+      // Date + time-a datetime format-la combine panrom
+      const startDateTime =
+        `${bookingDate}T${startTime}:00`;
 
-    // Booking successful message
-    alert("Booking confirmed successfully!");
+      const endDateTime =
+        `${bookingDate}T${endTime}:00`;
+
+      // Login pannumbodhu save panna access token-a eduka
+      const user =
+        JSON.parse(
+          localStorage.getItem("user")
+        );
+
+      // Token illana login page-ku pogum
+      if (!user || !user.access_token) {
+
+        alert("Please login before making a booking.");
+
+        navigate("/login");
+
+        return;
+      }
+
+      // Backend-ku booking details send panrom
+      const response = await fetch(
+        `${API_URL}/bookings`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${user.access_token}`
+          },
+
+          body: JSON.stringify({
+            storage_id: Number(id),
+            bags_count: Number(bags),
+            start_time: startDateTime,
+            end_time: endDateTime
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      // Booking successful
+      if (response.ok) {
+
+        alert("Booking confirmed successfully!");
+
+      } else {
+
+        // Backend error message kaata
+        alert(
+          data.detail ||
+          "Booking failed"
+        );
+
+      }
+
+    } catch (error) {
+
+      alert("Unable to connect to backend.");
+
+      console.error(error);
+
+    }
   }
 
   // Booking page main section
@@ -93,11 +171,14 @@ function Booking() {
                 </h5>
 
                 <p className="text-muted mb-1">
-                  📍 {storage.location}
+                  📍 {storage.address}, {storage.city}
                 </p>
 
                 <p className="mb-0">
-                  <strong>Rs. {storage.price}</strong> / bag
+                  <strong>
+                    Rs. {storage.price_per_bag}
+                  </strong>{" "}
+                  / bag
                 </p>
 
               </div>
@@ -107,6 +188,7 @@ function Booking() {
 
                 {/* Number of bags */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Number of Bags
                   </label>
@@ -115,14 +197,19 @@ function Booking() {
                     type="number"
                     className="form-control"
                     min="1"
+                    max="100"
                     placeholder="Enter number of bags"
                     value={bags}
-                    onChange={(e) => setBags(e.target.value)}
+                    onChange={(e) =>
+                      setBags(e.target.value)
+                    }
                   />
+
                 </div>
 
                 {/* Booking date */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Booking Date
                   </label>
@@ -135,10 +222,12 @@ function Booking() {
                       setBookingDate(e.target.value)
                     }
                   />
+
                 </div>
 
                 {/* Start time */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Start Time
                   </label>
@@ -151,10 +240,12 @@ function Booking() {
                       setStartTime(e.target.value)
                     }
                   />
+
                 </div>
 
                 {/* End time */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     End Time
                   </label>
@@ -167,6 +258,7 @@ function Booking() {
                       setEndTime(e.target.value)
                     }
                   />
+
                 </div>
 
                 {/* Booking button */}

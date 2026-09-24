@@ -1,13 +1,47 @@
-// My Bookings and Profile page-ku navigate panna Link import panrom
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Storage card-a dashboard-la use panna import panrom
 import StorageCard from "../components/StorageCard";
 
-// Temporary storage data-a use panna import panrom
-import storageData from "../data/storageData";
+// FastAPI backend URL
+import API_URL from "../api/api";
 
 function TravellerDashboard() {
+
+  // Backend-la irundhu storage data store panna state
+  const [storageData, setStorageData] = useState([]);
+
+  // Backend storage data fetch panna function
+  useEffect(() => {
+
+    async function fetchStorage() {
+
+      try {
+
+        // Backend-la irundhu storage locations fetch panrom
+        const response = await fetch(
+          `${API_URL}/storage`
+        );
+
+        const data = await response.json();
+
+        // Storage data state-la save panrom
+        setStorageData(data);
+
+      } catch (error) {
+
+        console.error(
+          "Unable to fetch storage data:",
+          error
+        );
+
+      }
+    }
+
+    fetchStorage();
+
+  }, []);
 
   // Traveller dashboard main section
   return (
@@ -42,7 +76,6 @@ function TravellerDashboard() {
                 Find a safe place to store your bags.
               </p>
 
-              {/* Available storage section-ku move panna link */}
               <a
                 href="#available-storage"
                 className="btn btn-success"
@@ -65,7 +98,6 @@ function TravellerDashboard() {
                 View your luggage storage bookings.
               </p>
 
-              {/* My Bookings page-ku navigate panna Link use panrom */}
               <Link
                 to="/my-bookings"
                 className="btn btn-outline-success"
@@ -88,7 +120,6 @@ function TravellerDashboard() {
                 View your account information.
               </p>
 
-              {/* Profile page-ku navigate panna Link use panrom */}
               <Link
                 to="/profile"
                 className="btn btn-outline-success"
@@ -118,7 +149,7 @@ function TravellerDashboard() {
         {/* Storage cards-a row-la display panna */}
         <div className="row g-4">
 
-          {/* storageData-la irukkura ovvoru storage-um card-aa display pannum */}
+          {/* Backend-la irundhu varra storage data display pannum */}
           {storageData.map((storage) => (
 
             <div
@@ -126,7 +157,6 @@ function TravellerDashboard() {
               key={storage.id}
             >
 
-              {/* Storage details-a StorageCard component-ku pass panrom */}
               <StorageCard storage={storage} />
 
             </div>

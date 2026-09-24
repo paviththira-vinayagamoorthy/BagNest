@@ -1,49 +1,133 @@
-import { useState } from "react";
-import storageData from "../data/storageData";
+import { useEffect, useState } from "react";
+import API_URL from "../api/api";
 
 function ManageStorage() {
 
   // Storage list-a state-la store panna
-  const [storages, setStorages] = useState(storageData);
+  const [storages, setStorages] = useState([]);
 
-  // New storage name-a store panna
+  // New storage values-a store panna states
   const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [pricePerBag, setPricePerBag] = useState("");
+  const [openingTime, setOpeningTime] = useState("");
+  const [closingTime, setClosingTime] = useState("");
 
-  // New storage location-a store panna
-  const [location, setLocation] = useState("");
+  // Backend-la irundhu storage locations fetch panna
+  useEffect(() => {
 
-  // New storage price-a store panna
-  const [price, setPrice] = useState("");
+    async function fetchStorages() {
 
-  // New storage capacity-a store panna
-  const [available, setAvailable] = useState("");
+      try {
+
+        const response = await fetch(
+          `${API_URL}/storage`
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setStorages(data);
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Unable to fetch storage:",
+          error
+        );
+
+      }
+    }
+
+    fetchStorages();
+
+  }, []);
 
   // New storage add panna function
-  function handleAddStorage(e) {
+  async function handleAddStorage(e) {
 
     // Form submit aagumbodhu page refresh aagama stop panna
     e.preventDefault();
 
-    // New storage object create panna
-    const newStorage = {
-      id: storages.length + 1,
-      name,
-      location,
-      price,
-      available
-    };
+    try {
 
-    // Existing storage list-oda new storage-a add panna
-    setStorages([
-      ...storages,
-      newStorage
-    ]);
+      // Login pannumbodhu save panna user details-a eduka
+      const user =
+        JSON.parse(
+          localStorage.getItem("user")
+        );
 
-    // Form fields-a clear panna
-    setName("");
-    setLocation("");
-    setPrice("");
-    setAvailable("");
+      // Access token illana storage add panna mudiyadhu
+      if (!user || !user.access_token) {
+
+        alert("Please login as a storage partner.");
+
+        return;
+      }
+
+      // Backend-ku new storage details send panrom
+      const response = await fetch(
+        `${API_URL}/storage`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${user.access_token}`
+          },
+
+          body: JSON.stringify({
+            name: name,
+            address: address,
+            city: city,
+            capacity: Number(capacity),
+            price_per_bag: Number(pricePerBag),
+            opening_time: openingTime,
+            closing_time: closingTime
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        alert("Storage added successfully!");
+
+        // New storage-a list-la add panrom
+        setStorages([
+          ...storages,
+          data
+        ]);
+
+        // Form fields clear panrom
+        setName("");
+        setAddress("");
+        setCity("");
+        setCapacity("");
+        setPricePerBag("");
+        setOpeningTime("");
+        setClosingTime("");
+
+      } else {
+
+        alert(
+          data.detail ||
+          "Unable to add storage"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Unable to connect to backend.");
+
+    }
   }
 
   return (
@@ -87,25 +171,49 @@ function ManageStorage() {
                   className="form-control"
                   placeholder="Enter storage name"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) =>
+                    setName(e.target.value)
+                  }
                   required
                 />
 
               </div>
 
-              {/* Storage location */}
+              {/* Storage address */}
               <div className="col-md-6">
 
                 <label className="form-label">
-                  Location
+                  Address
                 </label>
 
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Enter address"
+                  value={address}
+                  onChange={(e) =>
+                    setAddress(e.target.value)
+                  }
+                  required
+                />
+
+              </div>
+
+              {/* Storage city */}
+              <div className="col-md-6">
+
+                <label className="form-label">
+                  City
+                </label>
+
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter city"
+                  value={city}
+                  onChange={(e) =>
+                    setCity(e.target.value)
+                  }
                   required
                 />
 
@@ -122,8 +230,10 @@ function ManageStorage() {
                   type="number"
                   className="form-control"
                   placeholder="Enter price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={pricePerBag}
+                  onChange={(e) =>
+                    setPricePerBag(e.target.value)
+                  }
                   required
                 />
 
@@ -133,15 +243,55 @@ function ManageStorage() {
               <div className="col-md-6">
 
                 <label className="form-label">
-                  Available Bags
+                  Capacity
                 </label>
 
                 <input
                   type="number"
                   className="form-control"
-                  placeholder="Enter available bags"
-                  value={available}
-                  onChange={(e) => setAvailable(e.target.value)}
+                  placeholder="Enter storage capacity"
+                  value={capacity}
+                  onChange={(e) =>
+                    setCapacity(e.target.value)
+                  }
+                  required
+                />
+
+              </div>
+
+              {/* Opening time */}
+              <div className="col-md-6">
+
+                <label className="form-label">
+                  Opening Time
+                </label>
+
+                <input
+                  type="time"
+                  className="form-control"
+                  value={openingTime}
+                  onChange={(e) =>
+                    setOpeningTime(e.target.value)
+                  }
+                  required
+                />
+
+              </div>
+
+              {/* Closing time */}
+              <div className="col-md-6">
+
+                <label className="form-label">
+                  Closing Time
+                </label>
+
+                <input
+                  type="time"
+                  className="form-control"
+                  value={closingTime}
+                  onChange={(e) =>
+                    setClosingTime(e.target.value)
+                  }
                   required
                 />
 
@@ -191,18 +341,18 @@ function ManageStorage() {
                 </h5>
 
                 <p className="text-muted">
-                  📍 {storage.location}
+                  📍 {storage.address}, {storage.city}
                 </p>
 
                 <p>
                   <strong>
-                    Rs. {storage.price}
+                    Rs. {storage.price_per_bag}
                   </strong>{" "}
                   / bag
                 </p>
 
                 <p className="mb-0">
-                  Available: {storage.available} bags
+                  Capacity: {storage.capacity} bags
                 </p>
 
               </div>
