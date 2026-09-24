@@ -82,17 +82,15 @@ function Register() {
                 </div>
 
                 <div className="mb-3">
-                  <label className="form-label">
-                    Email
-                  </label>
+  <label className="form-label">Username / Email</label>
 
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                 <input
+               type="text"
+             className="form-control"
+             placeholder="Enter username or email"
+            value={email}
+           onChange={(e) => setEmail(e.target.value)}
+           />
                 </div>
 
                 {/* Password */}
