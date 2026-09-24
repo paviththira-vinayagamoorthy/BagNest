@@ -9,8 +9,9 @@ function Booking() {
 
   // Booking form values-a store panna states
   const [bags, setBags] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [bookingDate, setBookingDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
   // Storage id-ku match aagura storage-a find panna
   const storage = storageData.find(
@@ -52,8 +53,9 @@ function Booking() {
       location: storage.location,
       price: storage.price,
       bags,
-      startDate,
-      endDate
+      bookingDate,
+      startTime,
+      endTime
     };
 
     // Booking details-a browser localStorage-la save panna
@@ -81,6 +83,7 @@ function Booking() {
 
               {/* Selected storage details */}
               <div className="mb-4">
+
                 <h2 className="fw-bold text-success">
                   Book Storage
                 </h2>
@@ -96,6 +99,7 @@ function Booking() {
                 <p className="mb-0">
                   <strong>Rs. {storage.price}</strong> / bag
                 </p>
+
               </div>
 
               {/* Booking details form */}
@@ -117,31 +121,51 @@ function Booking() {
                   />
                 </div>
 
-                {/* Start date */}
+                {/* Booking date */}
                 <div className="mb-3">
                   <label className="form-label">
-                    Start Date
+                    Booking Date
                   </label>
 
                   <input
                     type="date"
                     className="form-control"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
+                    value={bookingDate}
+                    onChange={(e) =>
+                      setBookingDate(e.target.value)
+                    }
                   />
                 </div>
 
-                {/* End date */}
+                {/* Start time */}
                 <div className="mb-3">
                   <label className="form-label">
-                    End Date
+                    Start Time
                   </label>
 
                   <input
-                    type="date"
+                    type="time"
                     className="form-control"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
+                    value={startTime}
+                    onChange={(e) =>
+                      setStartTime(e.target.value)
+                    }
+                  />
+                </div>
+
+                {/* End time */}
+                <div className="mb-3">
+                  <label className="form-label">
+                    End Time
+                  </label>
+
+                  <input
+                    type="time"
+                    className="form-control"
+                    value={endTime}
+                    onChange={(e) =>
+                      setEndTime(e.target.value)
+                    }
                   />
                 </div>
 

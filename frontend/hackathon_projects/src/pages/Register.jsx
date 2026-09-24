@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
-    
+
+  // Login page-ku navigate panna useNavigate use panrom
+  const navigate = useNavigate();
 
   // Register form values-a store panna states
   const [name, setName] = useState("");
@@ -11,25 +13,28 @@ function Register() {
   const [role, setRole] = useState("traveller");
 
   // Register form submit-a handle panna function
-function handleRegister(e) {
+  function handleRegister(e) {
 
-  // Form submit aagumbodhu page refresh aagama stop panna
-  e.preventDefault();
+    // Form submit aagumbodhu page refresh aagama stop panna
+    e.preventDefault();
 
-  // User enter panna registration details-a oru object-la store panna
-  const user = {
-    name,
-    email,
-    password,
-    role
-  };
+    // User enter panna registration details-a oru object-la store panna
+    const user = {
+      name,
+      email,
+      password,
+      role
+    };
 
-  // Registered user details-a browser localStorage-la save panna
-  localStorage.setItem(
-    "registeredUser",
-    JSON.stringify(user)
-  );
-}
+    // Registered user details-a browser localStorage-la save panna
+    localStorage.setItem(
+      "registeredUser",
+      JSON.stringify(user)
+    );
+
+    // Registration mudinjathukku apram Login page-ku pogum
+    navigate("/login");
+  }
 
   // BagNest new user registration page
   return (
@@ -57,7 +62,7 @@ function handleRegister(e) {
               </div>
 
               {/* New account details enter panna form */}
-             <form onSubmit={handleRegister}>
+              <form onSubmit={handleRegister}>
 
                 <div className="mb-3">
                   <label className="form-label">
@@ -134,6 +139,7 @@ function handleRegister(e) {
               {/* Existing users-ku login option */}
               <p className="text-center mt-4 mb-0">
                 Already have an account?{" "}
+
                 <Link
                   to="/login"
                   className="text-success fw-semibold"

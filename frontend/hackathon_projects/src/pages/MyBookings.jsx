@@ -91,16 +91,22 @@ function MyBookings() {
                 {booking.bags}
               </p>
 
-              {/* Start date */}
+              {/* Booking date */}
               <p>
-                <strong>Start Date:</strong>{" "}
-                {booking.startDate}
+                <strong>Booking Date:</strong>{" "}
+                {booking.bookingDate}
               </p>
 
-              {/* End date */}
+              {/* Start time */}
               <p>
-                <strong>End Date:</strong>{" "}
-                {booking.endDate}
+                <strong>Start Time:</strong>{" "}
+                {booking.startTime}
+              </p>
+
+              {/* End time */}
+              <p>
+                <strong>End Time:</strong>{" "}
+                {booking.endTime}
               </p>
 
               {/* Price */}

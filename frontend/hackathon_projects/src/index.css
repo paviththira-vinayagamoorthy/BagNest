@@ -70,8 +70,8 @@ body {
   width: 100%;
   min-height: 70px;
 
-  background-color: var(--bag-white) !important;
-  border-bottom: 1px solid var(--bag-border) !important;
+  background-color: #166534 !important;
+  border-bottom: 1px solid #14532d !important;
 
   padding: 12px 0;
 
@@ -87,7 +87,7 @@ body {
 
 /* BagNest logo */
 .navbar-brand {
-  color: var(--bag-green) !important;
+  color: #ffffff !important;
 
   font-size: 24px;
   font-weight: 700;
@@ -108,7 +108,7 @@ body {
 
 /* Navigation links */
 .navbar .nav-link {
-  color: var(--bag-text);
+  color: #ffffff !important;
 
   font-size: 15px;
   font-weight: 500;
@@ -124,8 +124,8 @@ body {
 
 /* Navigation hover */
 .navbar .nav-link:hover {
-  color: var(--bag-green);
-  background-color: var(--bag-light-green);
+  color: #166534 !important;
+  background-color: #e8f3ec;
 }
 
 /* =========================================
