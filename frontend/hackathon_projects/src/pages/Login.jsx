@@ -1,6 +1,7 @@
 import { useState } from "react";
 // Login success aana page change panna navigate import panrom
 import { useNavigate, Link } from "react-router-dom";
+import API_URL from "../api/api";
 
 function Login() {
 
@@ -15,36 +16,60 @@ function Login() {
   const navigate = useNavigate();
 
   // Login form submit-a handle panna function
-  function handleLogin(e) {
+  async function handleLogin(e) {
 
     // Form submit aagumbodhu page refresh aagama stop panna
     e.preventDefault();
 
-    // Register pannina user details-a localStorage-la irundhu eduka
-    const registeredUser =
-      JSON.parse(
-        localStorage.getItem("registeredUser")
+    try {
+
+      // Backend-ku login details send panrom
+      const response = await fetch(
+        `${API_URL}/auth/login`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            username_or_email: email,
+            password: password
+          })
+        }
       );
 
-    // Enter panna email and password-a registered details-oda compare panna
-    if (
-      registeredUser &&
-      registeredUser.email === email &&
-      registeredUser.password === password
-    ) {
+      // Backend response-a JSON-aa convert panrom
+      const data = await response.json();
 
-      // Login successful-na user details-a localStorage-la save panna
-      localStorage.setItem(
-        "user",
-        JSON.stringify(registeredUser)
-      );
+      // Login successful
+      if (response.ok) {
 
-      // User role-ku etha dashboard-ku navigate panna
-      if (registeredUser.role === "traveller") {
-        navigate("/traveller-dashboard");
+        // Backend kudutha user details-a localStorage-la save panrom
+        localStorage.setItem(
+          "user",
+          JSON.stringify(data.user)
+        );
+
+        // User role-ku etha dashboard-ku navigate panrom
+        if (data.user.role === "traveller") {
+          navigate("/traveller-dashboard");
+        } else {
+          navigate("/partner-dashboard");
+        }
+
       } else {
-        navigate("/partner-dashboard");
+
+        // Backend error message kaata
+        alert(data.detail || "Login failed");
       }
+
+    } catch (error) {
+
+      // Backend connect aagala na error kaata
+      alert("Unable to connect to backend");
+
     }
   }
 
@@ -66,6 +91,7 @@ function Login() {
 
               {/* Login heading and description */}
               <div className="text-center mb-4">
+
                 <h2 className="fw-bold text-success">
                   Welcome Back
                 </h2>
@@ -73,33 +99,39 @@ function Login() {
                 <p className="text-muted">
                   Login to your BagNest account
                 </p>
+
               </div>
 
               {/* User login details enter panna form */}
               <form onSubmit={handleLogin}>
 
+                {/* Username / Email */}
                 <div className="mb-3">
+
                   <label className="form-label">
-                    Email
+                    Username / Email
                   </label>
 
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    placeholder="Enter your email"
+                    placeholder="Enter username or email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+
                 </div>
 
                 {/* Password */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Password
                   </label>
 
                   {/* Password input + show/hide button */}
                   <div className="input-group">
+
                     <input
                       type={showPassword ? "text" : "password"}
                       className="form-control"
@@ -117,7 +149,9 @@ function Login() {
                     >
                       {showPassword ? "Hide" : "Show"}
                     </button>
+
                   </div>
+
                 </div>
 
                 {/* Login button */}
@@ -132,6 +166,7 @@ function Login() {
 
               {/* New users registration option */}
               <p className="text-center mt-4 mb-0">
+
                 Don't have an account?{" "}
 
                 <Link
@@ -140,6 +175,7 @@ function Login() {
                 >
                   Register
                 </Link>
+
               </p>
 
             </div>
