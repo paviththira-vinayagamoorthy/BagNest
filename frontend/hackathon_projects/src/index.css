@@ -1,111 +1,624 @@
-/* :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* =========================================
+   BAGNEST GLOBAL STYLE
+   ========================================= */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
+/* Basic reset */
+* {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* BagNest colors */
+:root {
+  --bag-green: #176b3a;
+  --bag-dark-green: #0f4d2a;
+  --bag-light-green: #e8f3ec;
+
+  --bag-beige: #f6f0df;
+  --bag-light-beige: #fbf8ef;
+
+  --bag-white: #ffffff;
+
+  --bag-text: #26352c;
+  --bag-muted: #6c757d;
+  --bag-border: #e2e5df;
 }
+
+/* =========================================
+   HTML + BODY
+   ========================================= */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bag-beige) !important;
+  color: var(--bag-text);
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   ROOT APPLICATION
+   ========================================= */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Every page section fills available screen */
+#root > section {
+  flex: 1;
+  width: 100%;
+  background-color: var(--bag-beige);
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+
+.navbar {
+  width: 100%;
+  min-height: 70px;
+
+  background-color: #166534 !important;
+  border-bottom: 1px solid #14532d !important;
+
+  padding: 12px 0;
+
+  flex-shrink: 0;
+}
+
+/* Navbar container */
+.navbar > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* BagNest logo */
+.navbar-brand {
+  color: #ffffff !important;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  margin-right: 20px;
+}
+
+/* Navigation area */
+.navbar .d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-wrap: nowrap;
+}
+
+/* Navigation links */
+.navbar .nav-link {
+  color: #ffffff !important;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  padding: 8px 14px;
+
+  border-radius: 8px;
+
+  white-space: nowrap;
+
+  transition: all 0.2s ease;
+}
+
+/* Navigation hover */
+.navbar .nav-link:hover {
+  color: #166534 !important;
+  background-color: #e8f3ec;
+}
+
+/* =========================================
+   MAIN PAGE AREA
+   ========================================= */
+
+section {
+  width: 100%;
+}
+
+/* =========================================
+   HEADINGS
+   ========================================= */
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: 48px;
+  line-height: 1.2;
+  font-weight: 700;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Green text */
+.text-success {
+  color: var(--bag-green) !important;
+}
+
+/* =========================================
+   LANDING PAGE
+   ========================================= */
+
+.landing-hero {
+  min-height: calc(100vh - 180px);
+
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.btn-success {
+  background-color: var(--bag-green) !important;
+  border-color: var(--bag-green) !important;
+
+  color: var(--bag-white) !important;
+
+  min-height: 44px;
+
+  padding: 10px 22px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.btn-success:hover {
+  background-color: var(--bag-dark-green) !important;
+  border-color: var(--bag-dark-green) !important;
+
+  transform: translateY(-1px);
+}
+
+.btn-outline-success {
+  color: var(--bag-green) !important;
+  border-color: var(--bag-green) !important;
+
+  min-height: 44px;
+
+  padding: 10px 22px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.btn-outline-success:hover {
+  background-color: var(--bag-green) !important;
+  color: var(--bag-white) !important;
+}
+
+/* =========================================
+   CARDS
+   ========================================= */
+
+.card {
+  background-color: var(--bag-white);
+
+  border: 1px solid var(--bag-border);
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 14px rgba(23, 107, 58, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+/* Card hover */
+.card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 22px rgba(23, 107, 58, 0.12);
+}
+
+/* =========================================
+   DASHBOARD
+   ========================================= */
+
+.dashboard-card {
+  min-height: 190px;
+  padding: 24px;
+}
+
+.dashboard-card h5 {
+  margin-bottom: 12px;
+}
+
+.dashboard-card p {
+  color: var(--bag-muted);
+  line-height: 1.6;
+}
+
+/* =========================================
+   STORAGE CARDS
+   ========================================= */
+
+.storage-card {
+  min-height: 250px;
+  padding: 22px;
+}
+
+.storage-card h5 {
+  color: var(--bag-green);
+  margin-bottom: 12px;
+}
+
+.storage-card p {
+  margin-bottom: 8px;
+}
+
+/* =========================================
+   FORMS
+   ========================================= */
+
+.form-label {
+  font-weight: 600;
+
+  color: var(--bag-text);
+
+  margin-bottom: 7px;
+}
+
+.form-control,
+.form-select {
+  min-height: 46px;
+
+  border: 1px solid #d8ddd7;
+
+  border-radius: 8px;
+
+  padding: 10px 14px;
+
+  background-color: var(--bag-white);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bag-green);
+
+  box-shadow: 0 0 0 3px rgba(23, 107, 58, 0.12);
+}
+
+/* Autofill */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--bag-text);
+
+  box-shadow: 0 0 0 1000px var(--bag-white) inset;
+
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* =========================================
+   BOOKING PAGE
+   ========================================= */
+
+.booking-card {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   MY BOOKINGS
+   ========================================= */
+
+.booking-details {
+  padding: 24px;
+}
+
+.booking-details hr {
+  border-color: var(--bag-border);
+}
+
+/* Booking status */
+.badge.bg-success {
+  background-color: var(--bag-green) !important;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  font-weight: 500;
+}
+
+/* =========================================
+   PARTNER PAGES
+   ========================================= */
+
+.partner-card {
+  min-height: 180px;
+  padding: 24px;
+}
+
+/* =========================================
+   REPORTS
+   ========================================= */
+
+.report-card {
+  min-height: 150px;
+  padding: 24px;
+}
+
+.report-card h2 {
+  color: var(--bag-green);
+  margin-top: 10px;
+}
+
+/* Report table */
+.table {
+  margin-bottom: 0;
+
+  background-color: var(--bag-white);
+}
+
+.table th {
+  color: var(--bag-muted);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  padding: 14px 16px;
+}
+
+.table td {
+  padding: 14px 16px;
+
+  vertical-align: middle;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+  width: 100%;
+
+  background-color: #19352a !important;
+
+  padding: 30px 0;
+
+  margin-top: auto;
+
+  flex-shrink: 0;
+}
+
+footer h5 {
+  color: var(--bag-white);
+
+  font-size: 20px;
+
+  margin-bottom: 8px;
+}
+
+footer p {
+  color: #d7e3db;
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bag-light-beige);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #9bb5a3;
+
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--bag-green);
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 991px) {
+
+  h1 {
+    font-size: 40px;
   }
-}
-p {
-  margin: 0;
+
+  h2 {
+    font-size: 29px;
+  }
+
+  .landing-hero {
+    min-height: calc(100vh - 160px);
+  }
+
+  .navbar .nav-link {
+    padding: 8px 10px;
+  }
+
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    min-height: 60px;
+    padding: 10px 0;
+  }
+
+  .navbar > .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .navbar-brand {
+    font-size: 21px;
+    margin-right: 10px;
+  }
+
+  .navbar .d-flex {
+    gap: 4px !important;
+  }
+
+  .navbar .nav-link {
+    font-size: 14px;
+    padding: 7px 8px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  h2 {
+    font-size: 27px;
+  }
+
+  h3 {
+    font-size: 23px;
+  }
+
+  .landing-hero {
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  .card {
+    border-radius: 12px;
+  }
+
+  .btn-success,
+  .btn-outline-success {
+    min-height: 44px;
+  }
+
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-} */
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 576px) {
+
+  .navbar {
+    min-height: 58px;
+    padding: 8px 0;
+  }
+
+  .navbar > .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .navbar-brand {
+    font-size: 19px;
+  }
+
+  .navbar .d-flex {
+    gap: 1px !important;
+  }
+
+  .navbar .nav-link {
+    font-size: 12px;
+    padding: 6px 6px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 21px;
+  }
+
+  .landing-hero {
+    padding: 45px 0;
+  }
+
+  .card {
+    padding: 5px;
+  }
+
+  .btn-success,
+  .btn-outline-success {
+    width: 100%;
+  }
+
+  .table {
+    font-size: 13px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 8px;
+  }
+
+}
+
+/* =========================================
+   VERY SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 400px) {
+
+  .navbar-brand {
+    font-size: 17px;
+  }
+
+  .navbar .nav-link {
+    font-size: 11px;
+    padding: 5px 4px;
+  }
+
+}

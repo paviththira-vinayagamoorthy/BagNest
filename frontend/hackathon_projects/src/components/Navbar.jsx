@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 
 function Navbar() {
-//  bagNest kaana main navigation bar
+  // BagNest main navigation bar
   return (
-    <nav className="navbar bg-white border-bottom">
+    <nav className="navbar border-bottom">
 
       <div className="container">
 
-    {/* bagnest logo */}
+        {/* BagNest logo */}
         <Link
-          className="navbar-brand fw-bold text-success"
+          className="navbar-brand fw-bold"
           to="/"
         >
           BagNest
         </Link>
 
-    {/* navigation link */}
+        {/* Navigation links */}
         <div className="d-flex gap-3">
 
           <Link

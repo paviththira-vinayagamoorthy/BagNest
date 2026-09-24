@@ -5,6 +5,11 @@
 // import './App.css'
 // importing navbar.jsx
 import Navbar from "./components/Navbar";
+// importing footer.jsx
+import Footer from "./components/Footer";
+// Website pages-oda routes-a use panna AppRoutes import panrom
+import AppRoutes from "./routes/AppRoutes";
+
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -13,25 +18,9 @@ function App() {
     <>
     {/* using navbar */}
     <Navbar />
-      <div className="min-vh-100 d-flex align-items-center">
-      
-      <div className="container text-center">
-        
-        <h1 className="display-4 fw-bold text-success">
-          BagNest
-        </h1>
-
-        <p className="lead">
-          Smart luggage storage for travellers.
-        </p>
-
-        <button className="btn btn-success px-4">
-          Get Started
-        </button>
-
-      </div>
-
-    </div>
+{/* URL-ku eatha page-a AppRoutes display pannum */}
+       <AppRoutes />
+    <Footer/>
     </>
   )
 }
