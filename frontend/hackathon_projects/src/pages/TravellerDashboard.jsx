@@ -1,4 +1,4 @@
-// My Bookings page-ku navigate panna Link import panrom
+// My Bookings and Profile page-ku navigate panna Link import panrom
 import { Link } from "react-router-dom";
 
 // Storage card-a dashboard-la use panna import panrom
@@ -84,9 +84,13 @@ function TravellerDashboard() {
                 View your account information.
               </p>
 
-              <button className="btn btn-outline-success">
+              {/* Profile page-ku navigate panna Link use panrom */}
+              <Link
+                to="/profile"
+                className="btn btn-outline-success"
+              >
                 Profile
-              </button>
+              </Link>
 
             </div>
           </div>

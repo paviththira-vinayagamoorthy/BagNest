@@ -14,6 +14,7 @@ import PartnerBookings from "../pages/PartnerBookings";
 import ManageStorage from "../pages/ManageStorage";
 import CheckInOut from "../pages/CheckInOut";
 import Reports from "../pages/Reports";
+import Profile from "../pages/Profile";
 
 function AppRoutes() {
   // Website-la entha URL-ku entha page kaatanum nu define panrom
@@ -79,6 +80,11 @@ function AppRoutes() {
        path="/reports"
        element={<Reports />}
         />
+
+        <Route
+  path="/profile"
+  element={<Profile />}
+/>
     </Routes>
   );
 }
