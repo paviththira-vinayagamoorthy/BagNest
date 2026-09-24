@@ -1,5 +1,5 @@
 name,address,city,capacity,price_per_bag,opening_time,closing_time
-BagSafe Jaffna Central,123 Main Street,Jaffna,20,500,08:00,20:00
-BagSafe Colombo,Galle Road,Colombo,30,700,07:00,22:00
-BagSafe Kandy,Temple Road,Kandy,15,450,09:00,19:00
-BagSafe Negombo,Beach Road,Negombo,25,600,08:00,21:00
+BagNest Jaffna Central,123 Main Street,Jaffna,20,500,08:00,20:00
+BagNest Colombo,Galle Road,Colombo,30,700,07:00,22:00
+BagNest Kandy,Temple Road,Kandy,15,450,09:00,19:00
+BagNest Negombo,Beach Road,Negombo,25,600,08:00,21:00
