@@ -12,6 +12,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("traveller");
 
+  // Password show/hide panna state
+  const [showPassword, setShowPassword] = useState(false);
+
   // Register form submit-a handle panna function
   function handleRegister(e) {
 
@@ -92,18 +95,32 @@ function Register() {
                   />
                 </div>
 
+                {/* Password */}
                 <div className="mb-3">
                   <label className="form-label">
                     Password
                   </label>
 
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Create a password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  {/* Password input + show/hide button */}
+                  <div className="input-group">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      placeholder="Create a password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={() =>
+                        setShowPassword(!showPassword)
+                      }
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
                 </div>
 
                 {/* User role select panna */}
