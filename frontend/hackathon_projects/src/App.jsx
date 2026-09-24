@@ -7,8 +7,9 @@
 import Navbar from "./components/Navbar";
 // importing footer.jsx
 import Footer from "./components/Footer";
-// importing landingpage
-import LandingPage from "./pages/LandingPage";
+// Website pages-oda routes-a use panna AppRoutes import panrom
+import AppRoutes from "./routes/AppRoutes";
+
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -17,7 +18,8 @@ function App() {
     <>
     {/* using navbar */}
     <Navbar />
-      <LandingPage />
+{/* URL-ku eatha page-a AppRoutes display pannum */}
+       <AppRoutes />
     <Footer/>
     </>
   )
