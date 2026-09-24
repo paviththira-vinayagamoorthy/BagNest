@@ -10,6 +10,7 @@ import PartnerDashboard from "../pages/PartnerDashboard";
 // Booking page-a route-la use panna import panrom
 import Booking from "../pages/Booking";
 import MyBookings from "../pages/MyBookings";
+import PartnerBookings from "../pages/PartnerBookings";
 
 function AppRoutes() {
   // Website-la entha URL-ku entha page kaatanum nu define panrom
@@ -55,7 +56,11 @@ function AppRoutes() {
            path="/my-bookings"
            element={<MyBookings />}
         />
-
+       
+       <Route
+          path="/partner-bookings"
+         element={<PartnerBookings />}
+        />
     </Routes>
   );
 }
