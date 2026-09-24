@@ -1,3 +1,6 @@
+// My Bookings page-ku navigate panna Link import panrom
+import { Link } from "react-router-dom";
+
 // Storage card-a dashboard-la use panna import panrom
 import StorageCard from "../components/StorageCard";
 
@@ -58,9 +61,13 @@ function TravellerDashboard() {
                 View your luggage storage bookings.
               </p>
 
-              <button className="btn btn-outline-success">
+              {/* My Bookings page-ku navigate panna Link use panrom */}
+              <Link
+                to="/my-bookings"
+                className="btn btn-outline-success"
+              >
                 My Bookings
-              </button>
+              </Link>
 
             </div>
           </div>
