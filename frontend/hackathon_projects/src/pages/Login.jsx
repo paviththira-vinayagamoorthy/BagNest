@@ -46,10 +46,14 @@ function Login() {
       // Login successful
       if (response.ok) {
 
-        // Backend kudutha user details-a localStorage-la save panrom
+        // User details + access token-a localStorage-la save panrom
         localStorage.setItem(
           "user",
-          JSON.stringify(data.user)
+          JSON.stringify({
+            ...data.user,
+            access_token: data.access_token,
+            token_type: data.token_type
+          })
         );
 
         // User role-ku etha dashboard-ku navigate panrom
