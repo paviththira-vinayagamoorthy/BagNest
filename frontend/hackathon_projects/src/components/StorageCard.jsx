@@ -15,17 +15,17 @@ function StorageCard({ storage }) {
 
         {/* Storage location */}
         <p className="text-muted mb-2">
-          📍 {storage.location}
+          📍 {storage.address}, {storage.city}
         </p>
 
         {/* Storage price */}
         <p className="mb-2">
-          <strong>Rs. {storage.price}</strong> / bag
+          <strong>Rs. {storage.price_per_bag}</strong> / bag
         </p>
 
-        {/* Available storage spaces */}
+        {/* Storage capacity */}
         <p className="mb-3">
-          Available: {storage.available} bags
+          Capacity: {storage.capacity} bags
         </p>
 
         {/* Storage booking page-ku pogum button */}

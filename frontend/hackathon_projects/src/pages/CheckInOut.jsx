@@ -1,28 +1,125 @@
 import { useState } from "react";
+import API_URL from "../api/api";
 
 function CheckInOut() {
 
-  // Booking reference-a store panna state
+  // Booking ID-a store panna state
   const [bookingId, setBookingId] = useState("");
 
   // Check-in / Check-out status-a store panna state
   const [status, setStatus] = useState("");
 
   // Check-in button handle panna function
-  function handleCheckIn() {
+  async function handleCheckIn() {
 
-    // Booking ID irundha check-in status set panna
-    if (bookingId) {
-      setStatus("Checked In");
+    if (!bookingId) {
+      return;
+    }
+
+    try {
+
+      // Login pannumbodhu save panna user details-a eduka
+      const user =
+        JSON.parse(
+          localStorage.getItem("user")
+        );
+
+      if (!user || !user.access_token) {
+        alert("Please login first.");
+        return;
+      }
+
+      // Backend check-in API call
+      const response = await fetch(
+        `${API_URL}/bookings/${bookingId}/check-in`,
+        {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${user.access_token}`
+          }
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        setStatus(
+          data.checkin_status || "Checked In"
+        );
+
+      } else {
+
+        alert(
+          data.detail ||
+          "Check-in failed"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Unable to connect to backend.");
+
     }
   }
 
   // Check-out button handle panna function
-  function handleCheckOut() {
+  async function handleCheckOut() {
 
-    // Booking ID irundha check-out status set panna
-    if (bookingId) {
-      setStatus("Checked Out");
+    if (!bookingId) {
+      return;
+    }
+
+    try {
+
+      // Login pannumbodhu save panna user details-a eduka
+      const user =
+        JSON.parse(
+          localStorage.getItem("user")
+        );
+
+      if (!user || !user.access_token) {
+        alert("Please login first.");
+        return;
+      }
+
+      // Backend check-out API call
+      const response = await fetch(
+        `${API_URL}/bookings/${bookingId}/check-out`,
+        {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${user.access_token}`
+          }
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        setStatus(
+          data.checkin_status || "Checked Out"
+        );
+
+      } else {
+
+        alert(
+          data.detail ||
+          "Check-out failed"
+        );
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Unable to connect to backend.");
+
     }
   }
 
@@ -51,19 +148,21 @@ function CheckInOut() {
 
             <div className="card border-0 shadow-sm p-4">
 
-              {/* Booking reference input */}
+              {/* Booking ID input */}
               <div className="mb-4">
 
                 <label className="form-label">
-                  Booking Reference
+                  Booking ID
                 </label>
 
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
-                  placeholder="Enter booking reference"
+                  placeholder="Enter booking ID"
                   value={bookingId}
-                  onChange={(e) => setBookingId(e.target.value)}
+                  onChange={(e) =>
+                    setBookingId(e.target.value)
+                  }
                 />
 
               </div>
@@ -89,7 +188,8 @@ function CheckInOut() {
               {/* Current status */}
               {status && (
                 <div className="alert alert-success mt-4 mb-0">
-                  <strong>Status:</strong> {status}
+                  <strong>Status:</strong>{" "}
+                  {status}
                 </div>
               )}
 

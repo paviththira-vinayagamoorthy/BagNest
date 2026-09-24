@@ -1,33 +1,113 @@
 import { useEffect, useState } from "react";
+import API_URL from "../api/api";
 
 function Reports() {
 
-  // Booking details-a store panna state
-  const [booking, setBooking] = useState(null);
+  // Revenue report data-a store panna state
+  const [report, setReport] = useState(null);
 
-  // Page open aagumbodhu booking details-a localStorage-la irundhu eduka
+  // Page loading state
+  const [loading, setLoading] = useState(true);
+
+  // Backend-la irundhu revenue report fetch panna
   useEffect(() => {
 
-    const savedBooking =
-      JSON.parse(
-        localStorage.getItem("booking")
-      );
+    async function fetchReport() {
 
-    // Booking irundha state-la save panna
-    setBooking(savedBooking);
+      try {
+
+        // Login pannumbodhu save panna user details-a eduka
+        const user =
+          JSON.parse(
+            localStorage.getItem("user")
+          );
+
+        // Access token illana report access panna mudiyadhu
+        if (!user || !user.access_token) {
+          setLoading(false);
+          return;
+        }
+
+        // Backend revenue report API call
+        const response = await fetch(
+          `${API_URL}/reports/revenue`,
+          {
+            headers: {
+              "Authorization": `Bearer ${user.access_token}`
+            }
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          // Backend report data-a state-la save panrom
+          setReport(data);
+
+        } else {
+
+          console.error(
+            data.detail || "Unable to fetch report"
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Unable to connect to backend:",
+          error
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+    }
+
+    fetchReport();
 
   }, []);
 
-  // Booking irundha report values calculate panna
-  const totalBookings = booking ? 1 : 0;
+  // Report loading aagumbodhu
+  if (loading) {
+    return (
+      <section className="py-5">
 
-  const totalBags = booking
-    ? Number(booking.bags)
-    : 0;
+        <div className="container text-center">
 
-  const totalRevenue = booking
-    ? Number(booking.price) * Number(booking.bags)
-    : 0;
+          <p className="text-muted">
+            Loading report...
+          </p>
+
+        </div>
+
+      </section>
+    );
+  }
+
+  // Report data available illa-na
+  if (!report) {
+    return (
+      <section className="py-5">
+
+        <div className="container text-center">
+
+          <h2 className="fw-bold text-success">
+            Reports
+          </h2>
+
+          <p className="text-muted mt-3">
+            No report data available.
+          </p>
+
+        </div>
+
+      </section>
+    );
+  }
 
   return (
     <section className="py-5">
@@ -60,7 +140,7 @@ function Reports() {
               </h6>
 
               <h2 className="fw-bold text-success">
-                {totalBookings}
+                {report.total_bookings}
               </h2>
 
             </div>
@@ -77,7 +157,7 @@ function Reports() {
               </h6>
 
               <h2 className="fw-bold text-success">
-                {totalBags}
+                {report.total_bags}
               </h2>
 
             </div>
@@ -94,7 +174,7 @@ function Reports() {
               </h6>
 
               <h2 className="fw-bold text-success">
-                Rs. {totalRevenue}
+                Rs. {report.total_revenue}
               </h2>
 
             </div>
@@ -110,7 +190,8 @@ function Reports() {
             Booking Report
           </h5>
 
-          {booking ? (
+          {report.bookings &&
+          report.bookings.length > 0 ? (
 
             <div className="table-responsive">
 
@@ -118,41 +199,42 @@ function Reports() {
 
                 <thead>
                   <tr>
-                    <th>Storage</th>
+                    <th>Booking</th>
                     <th>Bags</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>Total Price</th>
                     <th>Status</th>
                   </tr>
                 </thead>
 
                 <tbody>
 
-                  <tr>
+                  {report.bookings.map((booking, index) => (
 
-                    <td>
-                      {booking.storageName}
-                    </td>
+                    <tr key={index}>
 
-                    <td>
-                      {booking.bags}
-                    </td>
+                      <td>
+                        {booking.reference_code ||
+                          booking.id ||
+                          "Booking"}
+                      </td>
 
-                    <td>
-                      {booking.startDate}
-                    </td>
+                      <td>
+                        {booking.bags_count}
+                      </td>
 
-                    <td>
-                      {booking.endDate}
-                    </td>
+                      <td>
+                        Rs. {booking.total_price}
+                      </td>
 
-                    <td>
-                      <span className="badge bg-success">
-                        Confirmed
-                      </span>
-                    </td>
+                      <td>
+                        <span className="badge bg-success">
+                          {booking.status}
+                        </span>
+                      </td>
 
-                  </tr>
+                    </tr>
+
+                  ))}
 
                 </tbody>
 
