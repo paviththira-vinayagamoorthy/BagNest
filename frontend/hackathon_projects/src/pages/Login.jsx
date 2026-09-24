@@ -1,12 +1,15 @@
 import { useState } from "react";
-// text-a link aa maatha Link import panrom
-import { Link } from "react-router-dom";
+// Login success aana page change panna navigate import panrom
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
 
   // Login form values-a store panna states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Login success aana dashboard-ku navigate panna
+  const navigate = useNavigate();
 
   // Login form submit-a handle panna function
   function handleLogin(e) {
@@ -32,6 +35,13 @@ function Login() {
         "user",
         JSON.stringify(registeredUser)
       );
+
+      // User role-ku etha dashboard-ku navigate panna
+      if (registeredUser.role === "traveller") {
+        navigate("/traveller-dashboard");
+      } else {
+        navigate("/partner-dashboard");
+      }
     }
   }
 
