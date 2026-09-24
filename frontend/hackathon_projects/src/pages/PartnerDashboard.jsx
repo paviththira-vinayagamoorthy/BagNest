@@ -1,3 +1,6 @@
+// Different pages-ku navigate panna Link import panrom
+import { Link } from "react-router-dom";
+
 function PartnerDashboard() {
 
   // Partner dashboard main section
@@ -24,6 +27,7 @@ function PartnerDashboard() {
           {/* Storage management card */}
           <div className="col-md-4">
             <div className="card border-0 shadow-sm h-100 p-4">
+
               <h5 className="fw-bold">
                 Manage Storage
               </h5>
@@ -32,15 +36,21 @@ function PartnerDashboard() {
                 Add and manage your luggage storage locations.
               </p>
 
-              <button className="btn btn-success">
+              {/* Manage Storage page-ku navigate panna */}
+              <Link
+                to="/manage-storage"
+                className="btn btn-success"
+              >
                 Manage Storage
-              </button>
+              </Link>
+
             </div>
           </div>
 
           {/* Booking management card */}
           <div className="col-md-4">
             <div className="card border-0 shadow-sm h-100 p-4">
+
               <h5 className="fw-bold">
                 Bookings
               </h5>
@@ -49,15 +59,21 @@ function PartnerDashboard() {
                 View and manage traveller bookings.
               </p>
 
-              <button className="btn btn-outline-success">
+              {/* Partner Bookings page-ku navigate panna */}
+              <Link
+                to="/partner-bookings"
+                className="btn btn-outline-success"
+              >
                 View Bookings
-              </button>
+              </Link>
+
             </div>
           </div>
 
           {/* Reports card */}
           <div className="col-md-4">
             <div className="card border-0 shadow-sm h-100 p-4">
+
               <h5 className="fw-bold">
                 Reports
               </h5>
@@ -66,9 +82,14 @@ function PartnerDashboard() {
                 View storage and booking reports.
               </p>
 
-              <button className="btn btn-outline-success">
+              {/* Reports page-ku navigate panna */}
+              <Link
+                to="/reports"
+                className="btn btn-outline-success"
+              >
                 View Reports
-              </button>
+              </Link>
+
             </div>
           </div>
 
