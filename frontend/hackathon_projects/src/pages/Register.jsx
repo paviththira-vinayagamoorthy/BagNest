@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_URL from "../api/api";
 
 function Register() {
 
@@ -16,27 +17,56 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
   // Register form submit-a handle panna function
-  function handleRegister(e) {
+  async function handleRegister(e) {
 
     // Form submit aagumbodhu page refresh aagama stop panna
     e.preventDefault();
 
-    // User enter panna registration details-a oru object-la store panna
-    const user = {
-      name,
-      email,
-      password,
-      role
-    };
+    try {
 
-    // Registered user details-a browser localStorage-la save panna
-    localStorage.setItem(
-      "registeredUser",
-      JSON.stringify(user)
-    );
+      // Backend-ku register details send panrom
+      const response = await fetch(
+        `${API_URL}/auth/register`,
+        {
+          method: "POST",
 
-    // Registration mudinjathukku apram Login page-ku pogum
-    navigate("/login");
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            username: email,
+            email: email,
+            full_name: name,
+            password: password,
+            role: role
+          })
+        }
+      );
+
+      // Backend response-a JSON-aa convert panrom
+      const data = await response.json();
+
+      // Registration successful
+      if (response.ok) {
+
+        alert("Registration successful!");
+
+        // Login page-ku navigate panrom
+        navigate("/login");
+
+      } else {
+
+        // Backend error message kaata
+        alert(data.detail || "Registration failed");
+      }
+
+    } catch (error) {
+
+      // Backend connect aagala na error kaata
+      alert("Unable to connect to backend");
+
+    }
   }
 
   // BagNest new user registration page
@@ -55,6 +85,7 @@ function Register() {
 
               {/* Register heading */}
               <div className="text-center mb-4">
+
                 <h2 className="fw-bold text-success">
                   Create Your Account
                 </h2>
@@ -62,12 +93,15 @@ function Register() {
                 <p className="text-muted">
                   Join BagNest and store your bags easily.
                 </p>
+
               </div>
 
               {/* New account details enter panna form */}
               <form onSubmit={handleRegister}>
 
+                {/* Full Name */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Full Name
                   </label>
@@ -79,30 +113,36 @@ function Register() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
+
                 </div>
 
+                {/* Username / Email */}
                 <div className="mb-3">
+
                   <label className="form-label">
-                    Email
+                    Username / Email
                   </label>
 
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
-                    placeholder="Enter your email"
+                    placeholder="Enter username or email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+
                 </div>
 
                 {/* Password */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Password
                   </label>
 
                   {/* Password input + show/hide button */}
                   <div className="input-group">
+
                     <input
                       type={showPassword ? "text" : "password"}
                       className="form-control"
@@ -120,11 +160,14 @@ function Register() {
                     >
                       {showPassword ? "Hide" : "Show"}
                     </button>
+
                   </div>
+
                 </div>
 
                 {/* User role select panna */}
                 <div className="mb-3">
+
                   <label className="form-label">
                     Register As
                   </label>
@@ -134,6 +177,7 @@ function Register() {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                   >
+
                     <option value="traveller">
                       Traveller
                     </option>
@@ -141,9 +185,12 @@ function Register() {
                     <option value="partner">
                       Storage Partner
                     </option>
+
                   </select>
+
                 </div>
 
+                {/* Create account button */}
                 <button
                   type="submit"
                   className="btn btn-success w-100"
@@ -155,6 +202,7 @@ function Register() {
 
               {/* Existing users-ku login option */}
               <p className="text-center mt-4 mb-0">
+
                 Already have an account?{" "}
 
                 <Link
@@ -163,6 +211,7 @@ function Register() {
                 >
                   Login
                 </Link>
+
               </p>
 
             </div>
