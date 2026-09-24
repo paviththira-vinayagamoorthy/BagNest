@@ -7,12 +7,14 @@ from app.models.user import User
 from app.models.storage import StorageLocation
 from app.models.booking import Booking
 from app.models.checkin import CheckInCheckout
+from app.models.csv_import import CSVImport
 
 from app.routers import (
     auth,
     storage,
     booking,
     checkin,
+    csv_import,
 )
 
 
@@ -41,6 +43,7 @@ app.include_router(auth.router)
 app.include_router(storage.router)
 app.include_router(booking.router)
 app.include_router(checkin.router)
+app.include_router(csv_import.router)
 
 
 @app.get("/")
