@@ -15,6 +15,7 @@ from app.routers import (
     booking,
     checkin,
     csv_import,
+    reports,
 )
 
 
@@ -44,6 +45,7 @@ app.include_router(storage.router)
 app.include_router(booking.router)
 app.include_router(checkin.router)
 app.include_router(csv_import.router)
+app.include_router(reports.router)
 
 
 @app.get("/")
