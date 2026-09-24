@@ -1,22 +1,94 @@
 import { useEffect, useState } from "react";
+import API_URL from "../api/api";
 
 function Profile() {
 
   // Logged-in user details-a store panna state
   const [user, setUser] = useState(null);
 
-  // Page open aagumbodhu localStorage-la irundhu user details eduka
+  // Page loading state
+  const [loading, setLoading] = useState(true);
+
+  // Page open aagumbodhu backend-la irundhu user details eduka
   useEffect(() => {
 
-    const savedUser =
-      JSON.parse(
-        localStorage.getItem("user")
-      );
+    async function fetchProfile() {
 
-    // User details irundha state-la save panna
-    setUser(savedUser);
+      try {
+
+        // Login pannumbodhu save panna user details-a eduka
+        const savedUser =
+          JSON.parse(
+            localStorage.getItem("user")
+          );
+
+        // Access token illana profile fetch panna mudiyadhu
+        if (!savedUser || !savedUser.access_token) {
+          setLoading(false);
+          return;
+        }
+
+        // Backend /auth/me API call
+        const response = await fetch(
+          `${API_URL}/auth/me`,
+          {
+            headers: {
+              "Authorization":
+                `Bearer ${savedUser.access_token}`
+            }
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+          // Backend user details-a state-la save panrom
+          setUser(data);
+
+        } else {
+
+          console.error(
+            data.detail ||
+            "Unable to fetch profile"
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Unable to connect to backend:",
+          error
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+    }
+
+    fetchProfile();
 
   }, []);
+
+  // Profile loading aagumbodhu
+  if (loading) {
+    return (
+      <section className="py-5">
+
+        <div className="container text-center">
+
+          <p className="text-muted">
+            Loading profile...
+          </p>
+
+        </div>
+
+      </section>
+    );
+  }
 
   // User details illa-na message kaata
   if (!user) {
@@ -74,7 +146,7 @@ function Profile() {
                 </label>
 
                 <p className="mb-0">
-                  {user.name}
+                  {user.full_name}
                 </p>
 
               </div>
