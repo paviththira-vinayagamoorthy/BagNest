@@ -8,7 +8,7 @@ from app.models.storage import StorageLocation
 from app.models.booking import Booking
 from app.models.checkin import CheckInCheckout
 
-from app.routers import auth
+from app.routers import auth, storage
 
 
 Base.metadata.create_all(bind=engine)
@@ -23,7 +23,9 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -31,6 +33,7 @@ app.add_middleware(
 
 
 app.include_router(auth.router)
+app.include_router(storage.router)
 
 
 @app.get("/")
