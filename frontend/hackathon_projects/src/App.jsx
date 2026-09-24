@@ -5,6 +5,8 @@
 // import './App.css'
 // importing navbar.jsx
 import Navbar from "./components/Navbar";
+// importing footer.jsx
+import Footer from "./components/Footer";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -32,6 +34,7 @@ function App() {
       </div>
 
     </div>
+    <Footer/>
     </>
   )
 }
