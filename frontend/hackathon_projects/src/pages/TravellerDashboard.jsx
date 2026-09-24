@@ -42,9 +42,13 @@ function TravellerDashboard() {
                 Find a safe place to store your bags.
               </p>
 
-              <button className="btn btn-success">
+              {/* Available storage section-ku move panna link */}
+              <a
+                href="#available-storage"
+                className="btn btn-success"
+              >
                 Find Storage
-              </button>
+              </a>
 
             </div>
           </div>
@@ -98,7 +102,10 @@ function TravellerDashboard() {
         </div>
 
         {/* Available storage section */}
-        <div className="mb-4">
+        <div
+          id="available-storage"
+          className="mb-4"
+        >
           <h3 className="fw-bold">
             Available Storage
           </h3>
