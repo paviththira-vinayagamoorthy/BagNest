@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -24,7 +26,14 @@ function Register() {
                 Create an account to use BagNest.
               </p>
 
-              <form>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+
+                  // Registration complete aana Login page-ku pogum
+                  navigate("/login");
+                }}
+              >
 
                 {/* Account type */}
 
@@ -113,7 +122,11 @@ function Register() {
                   <div className="password-wrapper">
 
                     <input
-                      type={showConfirmPassword ? "text" : "password"}
+                      type={
+                        showConfirmPassword
+                          ? "text"
+                          : "password"
+                      }
                       className="form-control register-input"
                       placeholder="Confirm your password"
                     />
@@ -122,7 +135,9 @@ function Register() {
                       type="button"
                       className="password-toggle"
                       onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
+                        setShowConfirmPassword(
+                          !showConfirmPassword
+                        )
                       }
                     >
                       {showConfirmPassword ? "Hide" : "Show"}

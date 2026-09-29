@@ -6,6 +6,7 @@ import Register from "../public/Register";
 import ExploreStorage from "../traveller/ExploreStorage";
 import StorageDetails from "../traveller/StorageDetails";
 import Booking from "../traveller/Booking";
+import TravellerDashboard from "../traveller/TravellerDashboard";
 
 function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ function AppRoutes() {
       <Route path="/explore-storage" element={<ExploreStorage />}/>
       <Route path="/storage/:id" element={<StorageDetails />}/>
       <Route path="/booking/:id" element={<Booking />}/>
+      <Route path="/traveller-dashboard" element={<TravellerDashboard />}/>
     </Routes>
   );
 }
