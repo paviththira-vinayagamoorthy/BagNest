@@ -45,11 +45,17 @@ function Booking() {
           LKR {storage.price} / bag
         </p>
 
+        <p>
+          <strong>Available Bags:</strong>{" "}
+          {storage.availableBags}
+        </p>
+
         {/* Booking form */}
         <form>
 
           {/* Number of bags */}
           <div className="mb-3">
+
             <label className="form-label">
               Number of Bags
             </label>
@@ -59,11 +65,18 @@ function Booking() {
               className="form-control"
               placeholder="Enter number of bags"
               min="1"
+              max={storage.availableBags}
             />
+
+            <small className="text-muted">
+              You can book up to {storage.availableBags} bags.
+            </small>
+
           </div>
 
           {/* Booking date */}
           <div className="mb-3">
+
             <label className="form-label">
               Booking Date
             </label>
@@ -72,10 +85,12 @@ function Booking() {
               type="date"
               className="form-control"
             />
+
           </div>
 
           {/* Start time */}
           <div className="mb-3">
+
             <label className="form-label">
               Start Time
             </label>
@@ -84,10 +99,12 @@ function Booking() {
               type="time"
               className="form-control"
             />
+
           </div>
 
           {/* End time */}
           <div className="mb-4">
+
             <label className="form-label">
               End Time
             </label>
@@ -96,6 +113,7 @@ function Booking() {
               type="time"
               className="form-control"
             />
+
           </div>
 
           {/* Confirm booking */}
