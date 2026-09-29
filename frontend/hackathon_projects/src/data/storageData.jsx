@@ -1,0 +1,58 @@
+const storageData = [
+  {
+    id: 1,
+    name: "Green Leaf Cafe",
+    location: "Jaffna Town",
+    type: "Cafe",
+    price: 250,
+    rating: 4.8,
+    availableBags: 8,
+  },
+  {
+    id: 2,
+    name: "City Hub Hotel",
+    location: "Colombo Fort",
+    type: "Hotel",
+    price: 400,
+    rating: 4.7,
+    availableBags: 12,
+  },
+  {
+    id: 3,
+    name: "Travel Corner",
+    location: "Kandy",
+    type: "Travel Shop",
+    price: 300,
+    rating: 4.9,
+    availableBags: 6,
+  },
+  {
+    id: 4,
+    name: "Central Backpackers",
+    location: "Ella",
+    type: "Hostel",
+    price: 350,
+    rating: 4.6,
+    availableBags: 10,
+  },
+  {
+    id: 5,
+    name: "City Stay",
+    location: "Negombo",
+    type: "Hotel",
+    price: 450,
+    rating: 4.8,
+    availableBags: 5,
+  },
+  {
+    id: 6,
+    name: "Easy Store",
+    location: "Nuwara Eliya",
+    type: "Storage Shop",
+    price: 300,
+    rating: 4.7,
+    availableBags: 9,
+  },
+];
+
+export default storageData;
