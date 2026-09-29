@@ -48,6 +48,7 @@ function Booking() {
         {/* Booking form */}
         <form>
 
+          {/* Number of bags */}
           <div className="mb-3">
             <label className="form-label">
               Number of Bags
@@ -57,9 +58,11 @@ function Booking() {
               type="number"
               className="form-control"
               placeholder="Enter number of bags"
+              min="1"
             />
           </div>
 
+          {/* Booking date */}
           <div className="mb-3">
             <label className="form-label">
               Booking Date
@@ -71,9 +74,10 @@ function Booking() {
             />
           </div>
 
-          <div className="mb-4">
+          {/* Start time */}
+          <div className="mb-3">
             <label className="form-label">
-              Booking Time
+              Start Time
             </label>
 
             <input
@@ -82,6 +86,19 @@ function Booking() {
             />
           </div>
 
+          {/* End time */}
+          <div className="mb-4">
+            <label className="form-label">
+              End Time
+            </label>
+
+            <input
+              type="time"
+              className="form-control"
+            />
+          </div>
+
+          {/* Confirm booking */}
           <button
             type="submit"
             className="btn btn-primary-custom"

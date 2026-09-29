@@ -1,68 +1,95 @@
+import { Link } from "react-router-dom";
+
 function TravellerDashboard() {
   return (
-    <div className="container py-5">
+    <div className="dashboard-page py-5">
 
-      {/* Dashboard heading */}
-      <h1 className="fw-bold">
-        Traveller Dashboard
-      </h1>
+      <div className="container">
 
-      <p className="text-muted">
-        Welcome to your BagNest dashboard.
-      </p>
+        {/* Dashboard heading */}
+        <h1 className="page-title">
+          Traveller Dashboard
+        </h1>
 
-      {/* Dashboard options */}
-      <div className="row mt-4">
+        <p className="page-description">
+          Welcome to your BagNest dashboard.
+        </p>
 
-        <div className="col-md-4 mb-3">
-          <div className="card p-4 h-100">
-            <h4>Explore Storage</h4>
+        {/* Dashboard options */}
+        <div className="row mt-4">
 
-            <p className="text-muted">
-              Find a safe place to store your luggage.
-            </p>
+          {/* Explore Storage */}
+          <div className="col-md-4 mb-4">
 
-            <a
-              href="/explore-storage"
-              className="btn btn-primary-custom"
-            >
-              Explore Storage
-            </a>
+            <div className="dashboard-card">
+
+              <h4>
+                Explore Storage
+              </h4>
+
+              <p>
+                Find a safe place to store your luggage.
+              </p>
+
+              <Link
+                to="/explore-storage"
+                className="btn btn-primary-custom"
+              >
+                Explore Storage
+              </Link>
+
+            </div>
+
           </div>
-        </div>
 
-        <div className="col-md-4 mb-3">
-          <div className="card p-4 h-100">
-            <h4>My Bookings</h4>
+          {/* My Bookings */}
+          <div className="col-md-4 mb-4">
 
-            <p className="text-muted">
-              View your luggage storage bookings.
-            </p>
+            <div className="dashboard-card">
 
-            <button
-              className="btn btn-primary-custom"
-              disabled
-            >
-              My Bookings
-            </button>
+              <h4>
+                My Bookings
+              </h4>
+
+              <p>
+                View your luggage storage bookings.
+              </p>
+
+              <Link
+                to="/my-bookings"
+                className="btn btn-primary-custom"
+              >
+                My Bookings
+              </Link>
+
+            </div>
+
           </div>
-        </div>
 
-        <div className="col-md-4 mb-3">
-          <div className="card p-4 h-100">
-            <h4>Notifications</h4>
+          {/* Notifications */}
+          <div className="col-md-4 mb-4">
 
-            <p className="text-muted">
-              Check your booking notifications.
-            </p>
+            <div className="dashboard-card">
 
-            <button
-              className="btn btn-primary-custom"
-              disabled
-            >
-              Notifications
-            </button>
+              <h4>
+                Notifications
+              </h4>
+
+              <p>
+                Check your booking notifications.
+              </p>
+
+              <button
+                className="btn btn-primary-custom"
+                disabled
+              >
+                Notifications
+              </button>
+
+            </div>
+
           </div>
+
         </div>
 
       </div>

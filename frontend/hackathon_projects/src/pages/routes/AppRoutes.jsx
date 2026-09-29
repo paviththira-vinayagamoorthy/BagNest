@@ -7,6 +7,7 @@ import ExploreStorage from "../traveller/ExploreStorage";
 import StorageDetails from "../traveller/StorageDetails";
 import Booking from "../traveller/Booking";
 import TravellerDashboard from "../traveller/TravellerDashboard";
+import MyBookings from "../traveller/MyBookings";
 
 function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ function AppRoutes() {
       <Route path="/storage/:id" element={<StorageDetails />}/>
       <Route path="/booking/:id" element={<Booking />}/>
       <Route path="/traveller-dashboard" element={<TravellerDashboard />}/>
+      <Route path="/my-bookings" element={<MyBookings />}/>
     </Routes>
   );
 }

@@ -832,3 +832,178 @@
 .password-toggle:hover {
   color: #22C55E;
 }
+
+/* =========================================
+   TRAVELLER DASHBOARD
+========================================= */
+
+.dashboard-page {
+  background-color: #fff9f2;
+  min-height: 70vh;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border: 1px solid #e7eee9;
+  border-radius: 16px;
+  padding: 24px;
+  height: 100%;
+  transition: 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  border-color: #22c55e;
+  box-shadow: 0 10px 25px rgba(20, 83, 45, 0.08);
+}
+
+.dashboard-card h4 {
+  color: #17211b;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.dashboard-card p {
+  color: #66736b;
+  line-height: 1.6;
+}
+
+.dashboard-card .btn {
+  margin-top: 10px;
+}
+
+
+/* =========================================
+   COMMON PAGE
+========================================= */
+
+.page-section {
+  background-color: #fff9f2;
+  min-height: 70vh;
+}
+
+.page-title {
+  color: #17211b;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.page-description {
+  color: #66736b;
+  font-size: 16px;
+}
+
+
+/* =========================================
+   MY BOOKINGS
+========================================= */
+
+.booking-page {
+  background-color: #fff9f2;
+  min-height: 70vh;
+}
+
+.booking-card {
+  background-color: #ffffff;
+  border: 1px solid #e7eee9;
+  border-radius: 16px;
+  padding: 24px;
+  height: 100%;
+}
+
+.booking-card h4 {
+  color: #17211b;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.booking-card p {
+  color: #66736b;
+  line-height: 1.6;
+}
+
+.booking-status {
+  display: inline-block;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   COMMON CARD
+========================================= */
+
+.bag-card {
+  background-color: #ffffff;
+  border: 1px solid #e7eee9;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(20, 83, 45, 0.05);
+}
+
+
+/* =========================================
+   FORM BUTTON
+========================================= */
+
+.btn-primary-custom {
+  background-color: #14532d;
+  border: 1px solid #14532d;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 10px 18px;
+}
+
+.btn-primary-custom:hover {
+  background-color: #0f3f22;
+  border-color: #0f3f22;
+  color: #ffffff;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  background-color: #ffffff;
+  border: 1px dashed #cbd8cf;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.empty-state h4 {
+  color: #17211b;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #66736b;
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 30px;
+  }
+
+  .dashboard-card {
+    padding: 20px;
+  }
+
+  .booking-card {
+    padding: 20px;
+  }
+}
