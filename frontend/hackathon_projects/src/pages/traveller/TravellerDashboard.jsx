@@ -103,13 +103,12 @@ function TravellerDashboard() {
                 Check your booking notifications.
               </p>
 
-              <button
-                type="button"
+              <Link
+                to="/notifications"
                 className="btn btn-primary-custom"
-                disabled
               >
                 Notifications
-              </button>
+              </Link>
 
             </div>
 

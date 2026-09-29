@@ -9,6 +9,7 @@ import Booking from "../traveller/Booking";
 import TravellerDashboard from "../traveller/TravellerDashboard";
 import MyBookings from "../traveller/MyBookings";
 import TravellerProfile from "../traveller/TravellerProfile";
+import Notifications from "../traveller/Notifications";
 
 function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ function AppRoutes() {
       <Route path="/traveller-dashboard" element={<TravellerDashboard />}/>
       <Route path="/my-bookings" element={<MyBookings />}/>
       <Route path="/traveller-profile" element={<TravellerProfile />}/>
+      <Route path="/notifications" element={<Notifications />}/>
     </Routes>
   );
 }
