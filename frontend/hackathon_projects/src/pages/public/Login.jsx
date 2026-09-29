@@ -2,10 +2,30 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  // Login success aana next page-ku navigate panna use pannrom
+  // Login success aana correct dashboard-ku navigate panna use pannrom
   const navigate = useNavigate();
 
+  // Password show / hide panna use pannrom
   const [showPassword, setShowPassword] = useState(false);
+
+  // Login as-la select panna user type-ah store pannrom
+  const [userType, setUserType] = useState("traveller");
+
+  // Login form submit handle pannrom
+  function handleLogin(event) {
+    // Form submit aagumbothu page refresh aagama stop pannrom
+    event.preventDefault();
+
+    // Traveller select pannirundha Traveller Dashboard-ku pogum
+    if (userType === "traveller") {
+      navigate("/traveller-dashboard");
+    }
+
+    // Partner select pannirundha Partner Dashboard-ku pogum
+    if (userType === "partner") {
+      navigate("/partner-dashboard");
+    }
+  }
 
   return (
     <div className="login-page">
@@ -27,15 +47,7 @@ function Login() {
               </p>
 
               {/* Login form */}
-              <form
-                onSubmit={(event) => {
-                  // Form submit aagumbothu page refresh aagama stop pannrom
-                  event.preventDefault();
-
-                  // Ippo temporary-aa Traveller Dashboard-ku pogum
-                  navigate("/traveller-dashboard");
-                }}
-              >
+              <form onSubmit={handleLogin}>
 
                 {/* Account type */}
                 <div className="mb-3">
@@ -46,7 +58,10 @@ function Login() {
 
                   <select
                     className="form-select login-input"
-                    defaultValue="traveller"
+                    value={userType}
+                    onChange={(event) =>
+                      setUserType(event.target.value)
+                    }
                   >
                     <option value="traveller">
                       Traveller
