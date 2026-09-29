@@ -1,44 +1,106 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
-    <div className="container py-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
+    <div className="login-page">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-7 col-lg-5">
 
-          <div className="card border-0 shadow-sm p-4">
-            <h2 className="mb-2">Welcome back</h2>
+            <div className="login-card">
 
-            <p className="text-muted mb-4">
-              Login to your BagNest account.
-            </p>
+              <h2 className="login-title">
+                Welcome back
+              </h2>
 
-            <form>
-              <div className="mb-3">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Enter your email"
-                />
+              <p className="login-description">
+                Login to continue with BagNest.
+              </p>
+
+              <form>
+
+                <div className="mb-3">
+                  <label className="login-label">
+                    Login as
+                  </label>
+
+                  <select
+                    className="form-select login-input"
+                    defaultValue="traveller"
+                  >
+                    <option value="traveller">
+                      Traveller
+                    </option>
+
+                    <option value="partner">
+                      Partner
+                    </option>
+                  </select>
+                </div>
+
+                <div className="mb-3">
+                  <label className="login-label">
+                    Email
+                  </label>
+
+                  <input
+                    type="email"
+                    className="form-control login-input"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="login-label">
+                    Password
+                  </label>
+
+                  <div className="password-wrapper">
+
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control login-input"
+                      placeholder="Enter your password"
+                    />
+
+                    <button
+                      type="button"
+                      className="password-toggle"
+                      onClick={() =>
+                        setShowPassword(!showPassword)
+                      }
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="login-button"
+                >
+                  Login
+                </button>
+
+              </form>
+
+              <div className="login-register">
+                <span>
+                  Don't have an account?
+                </span>
+
+                <Link to="/register">
+                  Register
+                </Link>
               </div>
 
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  placeholder="Enter your password"
-                />
-              </div>
+            </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary-custom w-100"
-              >
-                Login
-              </button>
-            </form>
           </div>
-
         </div>
       </div>
     </div>
