@@ -15,6 +15,7 @@ import ManageStorage from "../partner/ManageStorage";
 import PartnerBookings from "../partner/PartnerBookings";
 import Reports from "../partner/Reports";
 import PartnerProfile from "../partner/PartnerProfile";
+import PartnerNotifications from "../partner/PartnerNotifications";
 
 function AppRoutes() {
   return (
@@ -35,6 +36,7 @@ function AppRoutes() {
       <Route path="/partner-bookings" element={<PartnerBookings />}/>
       <Route path="/reports" element={<Reports />}/>
       <Route path="/partner-profile" element={<PartnerProfile />}/>
+      <Route path="/partner-notifications" element={<PartnerNotifications />}/>
     </Routes>
   );
 }

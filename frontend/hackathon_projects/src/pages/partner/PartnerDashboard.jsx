@@ -114,6 +114,30 @@ function PartnerDashboard() {
 
           </div>
 
+          {/* Notifications */}
+          <div className="col-md-4 mb-4">
+
+            <div className="dashboard-card">
+
+              <h4>
+                Notifications
+              </h4>
+
+              <p>
+                Check your storage and booking notifications.
+              </p>
+
+              <Link
+                to="/partner-notifications"
+                className="btn btn-primary-custom"
+              >
+                Notifications
+              </Link>
+
+            </div>
+
+          </div>
+
         </div>
 
       </div>
