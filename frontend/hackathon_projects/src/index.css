@@ -1,14 +1,6 @@
 /* =========================================================
-   NAVBAR
+   NAVBAR CUSTOM STYLES
    ========================================================= */
-
-.navbar {
-  background-color: #FFFFFF !important;
-}
-
-.navbar-brand {
-  color: #17211B !important;
-}
 
 .brand-mark {
   width: 38px;
@@ -38,23 +30,10 @@
   font-size: 14px;
   font-weight: 600;
   padding: 8px 12px !important;
-  transition: 0.2s ease;
 }
 
 .navbar .nav-link:hover {
   color: #14532D;
-}
-
-.navbar .nav-link.active {
-  color: #14532D;
-}
-
-.navbar-toggler {
-  border-color: #dfe5e1;
-}
-
-.navbar-toggler:focus {
-  box-shadow: none;
 }
 
 
@@ -164,46 +143,6 @@
 
 
 /* =========================================================
-   NAVBAR + FOOTER RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 991px) {
-
-  .navbar-collapse {
-    width: 100%;
-    padding-top: 15px;
-  }
-
-  .navbar-nav {
-    align-items: flex-start !important;
-  }
-
-  .navbar .nav-link {
-    width: 100%;
-    padding-left: 0 !important;
-  }
-
-  .btn-primary-custom {
-    display: inline-block;
-  }
-}
-
-
-@media (max-width: 767px) {
-
-  .bag-footer {
-    padding-top: 50px;
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 35px;
-  }
-}
-
-
-/* =========================================================
    STORAGE CARD
    ========================================================= */
 
@@ -214,9 +153,7 @@
   border: 1px solid #edf0ed;
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(23, 33, 27, 0.06);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .storage-card:hover {
@@ -730,9 +667,7 @@
 }
 
 
-/* =========================================================
-   REGISTER PAGE RESPONSIVE
-   ========================================================= */
+/* Register page mobile */
 
 @media (max-width: 767px) {
 
@@ -840,9 +775,7 @@
 }
 
 
-/* =========================================================
-   LOGIN PAGE RESPONSIVE
-   ========================================================= */
+/* Login page mobile */
 
 @media (max-width: 767px) {
 
@@ -865,8 +798,9 @@
   }
 }
 
+
 /* =========================================================
-   LOGIN PASSWORD SHOW / HIDE
+   PASSWORD SHOW / HIDE
    ========================================================= */
 
 .password-wrapper {
@@ -877,30 +811,24 @@
   padding-right: 65px;
 }
 
+.password-wrapper .register-input {
+  padding-right: 65px;
+}
+
 .password-toggle {
   position: absolute;
   top: 50%;
   right: 12px;
   transform: translateY(-50%);
-
   padding: 0;
-
   background-color: transparent;
   border: none;
-
   color: #14532D;
   font-size: 13px;
   font-weight: 700;
-
   cursor: pointer;
 }
 
 .password-toggle:hover {
   color: #22C55E;
-}
-
-/* Register password field */
-
-.password-wrapper .register-input {
-  padding-right: 65px;
 }
