@@ -13,6 +13,7 @@ import Notifications from "../traveller/Notifications";
 import PartnerDashboard from "../partner/PartnerDashboard";
 import ManageStorage from "../partner/ManageStorage";
 import PartnerBookings from "../partner/PartnerBookings";
+import Reports from "../partner/Reports";
 
 function AppRoutes() {
   return (
@@ -31,6 +32,7 @@ function AppRoutes() {
       <Route path="/partner-dashboard" element={<PartnerDashboard />}/>
       <Route path="/manage-storage" element={<ManageStorage />}/>
       <Route path="/partner-bookings" element={<PartnerBookings />}/>
+      <Route path="/reports" element={<Reports />}/>
     </Routes>
   );
 }
