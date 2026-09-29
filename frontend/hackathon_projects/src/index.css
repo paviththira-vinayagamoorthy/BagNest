@@ -1,107 +1,261 @@
-/* ==============================
-   BagNest Theme Colors
-   ============================== */
+/* =========================================================
+   NAVBAR
+   ========================================================= */
 
-:root {
-  --primary: #14532D;
-  --secondary: #22C55E;
-  --accent: #FDBA8C;
-  --background: #FFF9F2;
-  --white: #FFFFFF;
-  --text: #17211B;
-  --muted: #66736B;
-  --success: #16A34A;
-  --error: #DC2626;
+.navbar {
+  background-color: #FFFFFF !important;
 }
 
-/* ==============================
-   Basic Reset
-   ============================== */
-
-* {
-  box-sizing: border-box;
+.navbar-brand {
+  color: #17211B !important;
 }
 
-html {
-  scroll-behavior: smooth;
+.brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #14532D;
+
+  color: #FFFFFF;
+
+  border-radius: 10px;
+
+  font-size: 18px;
+
+  font-weight: 800;
 }
 
-body {
-  margin: 0;
-  background-color: var(--background);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+.brand-name {
+  color: #17211B;
+
+  font-size: 22px;
+
+  font-weight: 800;
 }
 
-/* ==============================
-   Foundation Test
-   ============================== */
-
-.foundation-card {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 60px 35px;
-  background-color: var(--white);
-  border-radius: 20px;
-  text-align: center;
+.brand-name span {
+  color: #22C55E;
 }
 
-.foundation-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #E9F8EE;
-  color: var(--primary);
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: bold;
+.navbar .nav-link {
+  color: #66736B;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  padding: 8px 12px !important;
+
+  transition: 0.2s ease;
 }
 
-.foundation-title {
-  margin-top: 25px;
-  font-size: 42px;
-  font-weight: bold;
+.navbar .nav-link:hover {
+  color: #14532D;
 }
 
-.foundation-title span {
-  color: var(--primary);
+.navbar .nav-link.active {
+  color: #14532D;
 }
 
-.foundation-description {
-  max-width: 550px;
-  margin: 20px auto 30px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 26px;
+.navbar-toggler {
+  border-color: #dfe5e1;
 }
 
-.btn-bagnest {
-  padding: 12px 25px;
-  background-color: var(--primary);
-  color: var(--white);
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   NAVBAR BUTTON
+   ========================================================= */
+
+.btn-primary-custom {
+  background-color: #14532D;
+
+  border: 1px solid #14532D;
+
+  color: #FFFFFF;
+
+  padding: 11px 20px;
+
   border-radius: 8px;
-  font-weight: bold;
+
+  font-weight: 700;
+
+  transition: 0.2s ease;
 }
 
-.btn-bagnest:hover {
-  background-color: var(--secondary);
-  color: var(--text);
+.btn-primary-custom:hover {
+  background-color: #22C55E;
+
+  border-color: #22C55E;
+
+  color: #FFFFFF;
 }
 
-/* ==============================
-   Mobile
-   ============================== */
 
-@media (max-width: 576px) {
-  .foundation-card {
-    margin: 25px auto;
-    padding: 40px 20px;
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.bag-footer {
+  padding: 65px 0 25px;
+
+  background-color: #14532D;
+
+  color: #FFFFFF;
+}
+
+.footer-brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+
+  color: #FFFFFF;
+
+  font-size: 24px;
+
+  font-weight: 800;
+}
+
+.footer-brand-mark {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: #22C55E;
+
+  color: #FFFFFF;
+
+  border-radius: 10px;
+
+  font-size: 18px;
+
+  font-weight: 800;
+}
+
+.footer-brand > span:last-child > span {
+  color: #22C55E;
+}
+
+.footer-description {
+  max-width: 450px;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+.footer-heading {
+  margin-bottom: 18px;
+
+  color: #FFFFFF;
+
+  font-size: 14px;
+
+  font-weight: 800;
+}
+
+.footer-links {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+
+  transition: 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF;
+}
+
+.footer-bottom {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 50px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer-bottom p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   NAVBAR + FOOTER RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+  .navbar-collapse {
+    width: 100%;
+
+    padding-top: 15px;
   }
 
-  .foundation-title {
-    font-size: 30px;
+  .navbar-nav {
+    align-items: flex-start !important;
   }
 
-  .foundation-description {
-    font-size: 14px;
+  .navbar .nav-link {
+    width: 100%;
+
+    padding-left: 0 !important;
+  }
+
+  .btn-primary-custom {
+    display: inline-block;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .bag-footer {
+    padding-top: 50px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 35px;
   }
 }
