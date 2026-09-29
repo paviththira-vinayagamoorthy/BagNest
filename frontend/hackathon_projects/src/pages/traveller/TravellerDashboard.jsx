@@ -66,6 +66,30 @@ function TravellerDashboard() {
 
           </div>
 
+          {/* My Profile */}
+          <div className="col-md-4 mb-4">
+
+            <div className="dashboard-card">
+
+              <h4>
+                My Profile
+              </h4>
+
+              <p>
+                View and manage your traveller profile.
+              </p>
+
+              <Link
+                to="/traveller-profile"
+                className="btn btn-primary-custom"
+              >
+                View Profile
+              </Link>
+
+            </div>
+
+          </div>
+
           {/* Notifications */}
           <div className="col-md-4 mb-4">
 
@@ -80,6 +104,7 @@ function TravellerDashboard() {
               </p>
 
               <button
+                type="button"
                 className="btn btn-primary-custom"
                 disabled
               >

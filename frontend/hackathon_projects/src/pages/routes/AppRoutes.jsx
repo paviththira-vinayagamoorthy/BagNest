@@ -8,6 +8,7 @@ import StorageDetails from "../traveller/StorageDetails";
 import Booking from "../traveller/Booking";
 import TravellerDashboard from "../traveller/TravellerDashboard";
 import MyBookings from "../traveller/MyBookings";
+import TravellerProfile from "../traveller/TravellerProfile";
 
 function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ function AppRoutes() {
       <Route path="/booking/:id" element={<Booking />}/>
       <Route path="/traveller-dashboard" element={<TravellerDashboard />}/>
       <Route path="/my-bookings" element={<MyBookings />}/>
+      <Route path="/traveller-profile" element={<TravellerProfile />}/>
     </Routes>
   );
 }
