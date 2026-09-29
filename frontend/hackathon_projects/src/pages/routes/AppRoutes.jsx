@@ -11,6 +11,7 @@ import MyBookings from "../traveller/MyBookings";
 import TravellerProfile from "../traveller/TravellerProfile";
 import Notifications from "../traveller/Notifications";
 import PartnerDashboard from "../partner/PartnerDashboard";
+import ManageStorage from "../partner/ManageStorage";
 
 function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ function AppRoutes() {
       <Route path="/traveller-profile" element={<TravellerProfile />}/>
       <Route path="/notifications" element={<Notifications />}/>
       <Route path="/partner-dashboard" element={<PartnerDashboard />}/>
+      <Route path="/manage-storage" element={<ManageStorage />}/>
     </Routes>
   );
 }
