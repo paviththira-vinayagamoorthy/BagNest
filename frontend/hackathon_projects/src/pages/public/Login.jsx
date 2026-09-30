@@ -9,7 +9,8 @@ function Login() {
   // ?redirect=/booking/3 (StorageDetails-la irunthu varum)
   const [searchParams] = useSearchParams();
 
-  const [email, setEmail] = useState("");
+  // Email illa Username rendil onnu
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -28,7 +29,7 @@ function Login() {
         method: "POST",
         auth: false,
         body: {
-          username_or_email: email.trim(),
+          username_or_email: identifier.trim(),
           password,
         },
       });
@@ -79,16 +80,21 @@ function Login() {
               )}
 
               <form onSubmit={handleLogin}>
-                {/* Email */}
+                {/* Email or Username */}
                 <div className="mb-3">
-                  <label className="login-label">Email</label>
+                  <label className="login-label">
+                    Email or Username
+                  </label>
 
                   <input
-                    type="email"
+                    type="text"
                     className="form-control login-input"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="Enter your email or username"
+                    autoComplete="username"
+                    value={identifier}
+                    onChange={(event) =>
+                      setIdentifier(event.target.value)
+                    }
                     required
                   />
                 </div>

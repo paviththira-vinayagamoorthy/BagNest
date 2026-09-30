@@ -1007,3 +1007,148 @@
     padding: 20px;
   }
 }
+
+
+/* ===== MODERN DASHBOARD ===== */
+.dash-page {
+  background: #FFF9F2;
+  min-height: 80vh;
+  padding: 40px 0 60px;
+}
+
+.dash-hero {
+  background: linear-gradient(135deg, #14532D, #22C55E);
+  color: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(20, 83, 45, 0.25);
+}
+
+.dash-hero h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dash-hero p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.dash-hero-btn {
+  background: #fff;
+  color: #14532D;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.dash-hero-btn:hover {
+  background: #E8F7EE;
+  color: #14532D;
+}
+
+.dash-stat {
+  background: #fff;
+  border: 1px solid #E7EEE9;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  box-shadow: 0 4px 15px rgba(20, 83, 45, 0.05);
+}
+
+.dash-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #E8F7EE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.dash-stat-label {
+  color: #66736B;
+  font-size: 13px;
+  margin: 0;
+}
+
+.dash-stat-value {
+  color: #17211B;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dash-section-title {
+  color: #17211B;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 32px 0 16px;
+}
+
+.dash-action {
+  display: block;
+  background: #fff;
+  border: 1px solid #E7EEE9;
+  border-radius: 16px;
+  padding: 22px;
+  text-decoration: none;
+  color: #17211B;
+  height: 100%;
+  transition: 0.2s ease;
+}
+
+.dash-action:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(20, 83, 45, 0.12);
+  border-color: #22C55E;
+  color: #17211B;
+}
+
+.dash-action-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.dash-action h5 {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dash-action p {
+  color: #66736B;
+  font-size: 14px;
+  margin: 0;
+}
+
+.dash-list {
+  background: #fff;
+  border: 1px solid #E7EEE9;
+  border-radius: 16px;
+  padding: 8px 20px;
+}
+
+.dash-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #EEF3EF;
+}
+
+.dash-list-item:last-child {
+  border-bottom: none;
+}
+
+.dash-list-item small {
+  color: #66736B;
+}

@@ -1,27 +1,15 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { apiFetch } from "../../api/api";
-
-// Backend-ku username venum, aana form-la illa.
-// Email-la irunthu unique username generate pannrom.
-function makeUsername(email) {
-  const base =
-    email
-      .split("@")[0]
-      .replace(/[^a-zA-Z0-9_]/g, "")
-      .slice(0, 35) || "user";
-
-  const suffix = Math.floor(1000 + Math.random() * 9000);
-
-  return `${base}_${suffix}`;
-}
 
 function Register() {
   const navigate = useNavigate();
 
   const [role, setRole] = useState("traveller");
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,6 +24,13 @@ function Register() {
     event.preventDefault();
 
     setError("");
+
+    if (!/^[A-Za-z0-9_]{3,50}$/.test(username.trim())) {
+      setError(
+        "Username must be 3-50 characters: letters, numbers or underscore only."
+      );
+      return;
+    }
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
@@ -55,7 +50,7 @@ function Register() {
         method: "POST",
         auth: false,
         body: {
-          username: makeUsername(email.trim()),
+          username: username.trim(),
           email: email.trim(),
           full_name: fullName.trim(),
           password,
@@ -118,6 +113,23 @@ function Register() {
                     value={fullName}
                     onChange={(event) => setFullName(event.target.value)}
                     minLength={2}
+                    required
+                  />
+                </div>
+
+                {/* Username */}
+                <div className="mb-3">
+                  <label className="register-label">Username</label>
+
+                  <input
+                    type="text"
+                    className="form-control register-input"
+                    placeholder="Choose a username (you can login with it)"
+                    autoComplete="username"
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
+                    minLength={3}
+                    maxLength={50}
                     required
                   />
                 </div>
