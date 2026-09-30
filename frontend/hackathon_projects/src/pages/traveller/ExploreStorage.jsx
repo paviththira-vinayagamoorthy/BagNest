@@ -1,96 +1,98 @@
 import { useEffect, useState } from "react";
 
-import { apiFetch } from "../../services/api";
+import { apiFetch } from "../../api/api";
 import StorageCard from "../../components/StorageCard";
 
 function ExploreStorage() {
-  // Backend-la irundhu varra storage data store panna
-  const [storageData, setStorageData] = useState([]);
+  const [storages, setStorages] = useState([]);
+  const [city, setCity] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
+  // Backend: GET /storage?city=...
+  async function loadStorage(searchCity = "") {
+    setLoading(true);
+    setError("");
 
-  // Error message store panna
-  const [errorMessage, setErrorMessage] = useState("");
+    try {
+      const query = searchCity.trim()
+        ? `?city=${encodeURIComponent(searchCity.trim())}`
+        : "";
 
-  // Page load aagumbothu backend-la storage data fetch pannrom
-  useEffect(() => {
-    async function fetchStorage() {
-      try {
-        // GET /storage API call
-        const data = await apiFetch("/storage");
+      const data = await apiFetch(`/storage${query}`, {
+        auth: false,
+      });
 
-        // Backend data state-la save pannrom
-        setStorageData(data);
-      } catch (error) {
-        // API error vandha message show pannrom
-        setErrorMessage(
-          error.message || "Failed to load storage."
-        );
-      } finally {
-        // Loading stop pannrom
-        setIsLoading(false);
-      }
+      setStorages(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchStorage();
+  // Page open aanathum ella storage-um load pannrom
+  useEffect(() => {
+    loadStorage();
   }, []);
+
+  function handleSearch(event) {
+    event.preventDefault();
+    loadStorage(city);
+  }
 
   return (
     <div className="explore-page">
       <div className="container">
+        <h1 className="explore-title">Explore Storage</h1>
 
-        {/* Page heading kaaga */}
-        <h1 className="explore-title">
-          Explore Storage
-        </h1>
-
-        {/* Page description kaaga */}
         <p className="explore-description">
           Find a safe place to store your luggage.
         </p>
 
-        {/* Loading message */}
-        {isLoading && (
+        {/* City search */}
+        <form
+          className="d-flex gap-2 mb-4"
+          onSubmit={handleSearch}
+        >
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by city (e.g. Jaffna)"
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+          />
+
+          <button
+            type="submit"
+            className="btn btn-primary-custom"
+          >
+            Search
+          </button>
+        </form>
+
+        {loading && <p>Loading storage locations...</p>}
+
+        {error && (
+          <div className="alert alert-danger">{error}</div>
+        )}
+
+        {!loading && !error && storages.length === 0 && (
           <p className="text-muted">
-            Loading storage...
+            No storage locations found.
           </p>
         )}
 
-        {/* Backend error message */}
-        {errorMessage && (
-          <div className="alert alert-danger">
-            {errorMessage}
-          </div>
-        )}
-
-        {/* Storage data empty-aa irundha */}
-        {!isLoading &&
-          !errorMessage &&
-          storageData.length === 0 && (
-            <div className="alert alert-info">
-              No storage locations available.
+        <div className="row">
+          {storages.map((storage) => (
+            <div
+              className="col-md-6 col-lg-4 mb-4"
+              key={storage.id}
+            >
+              <StorageCard storage={storage} />
             </div>
-          )}
-
-        {/* Storage cards display panna */}
-        {!isLoading &&
-          !errorMessage &&
-          storageData.length > 0 && (
-            <div className="row">
-
-              {storageData.map((storage) => (
-                <div
-                  className="col-md-6 col-lg-4 mb-4"
-                  key={storage.id}
-                >
-                  <StorageCard storage={storage} />
-                </div>
-              ))}
-
-            </div>
-          )}
-
+          ))}
+        </div>
       </div>
     </div>
   );

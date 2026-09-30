@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import {Link,useLocation,useNavigate,} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { clearSession } from "../api/api";
 
 function Navbar() {
   // Logout aana Login page-ku poganum
@@ -10,14 +12,14 @@ function Navbar() {
 
   // User login pannirukkaa-nu temporary-aa check pannrom
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn") === "true"
+    Boolean(localStorage.getItem("token"))
   );
 
   // Login / logout navigation change aagumbothu
   // Navbar login state-ah update pannrom
   useEffect(() => {
     setIsLoggedIn(
-      localStorage.getItem("isLoggedIn") === "true"
+      Boolean(localStorage.getItem("token"))
     );
   }, [location.pathname]);
 
@@ -31,11 +33,8 @@ function Navbar() {
     // User OK kudutha
     if (confirmLogout) {
 
-      // Login state remove pannrom
-      localStorage.removeItem("isLoggedIn");
-
-      // User type remove pannrom
-      localStorage.removeItem("userType");
+      // Token, user, login state ellam remove pannrom
+      clearSession();
 
       // Navbar-la immediately Login / Get Started varanum
       setIsLoggedIn(false);
@@ -98,7 +97,19 @@ function Navbar() {
             </>
           ) : (
             <>
-              {/* Login pannirundha Logout mattum */}
+              {/* Role-ku yetha Dashboard link */}
+              <Link
+                className="nav-link"
+                to={
+                  localStorage.getItem("userType") === "partner"
+                    ? "/partner-dashboard"
+                    : "/traveller-dashboard"
+                }
+              >
+                Dashboard
+              </Link>
+
+              {/* Logout */}
               <button
                 type="button"
                 className="btn btn-primary-custom"

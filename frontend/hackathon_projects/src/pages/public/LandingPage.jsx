@@ -1,11 +1,21 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import storageData from "../../data/storageData";
+import { apiFetch } from "../../api/api";
 import StorageCard from "../../components/StorageCard";
 
 import heroImage from "../../assets/hero-illustration.jpg";
 
 function LandingPage() {
+  // Latest storage locations backend-la irunthu edukkrom
+  const [storages, setStorages] = useState([]);
+
+  useEffect(() => {
+    apiFetch("/storage", { auth: false })
+      .then(setStorages)
+      .catch(() => setStorages([]));
+  }, []);
+
   return (
     <main className="landing-page">
 
@@ -172,7 +182,7 @@ function LandingPage() {
 
           <div className="row g-4">
 
-            {storageData.map((storage) => (
+            {storages.slice(0, 3).map((storage) => (
               <div
                 className="col-md-6 col-lg-4"
                 key={storage.id}

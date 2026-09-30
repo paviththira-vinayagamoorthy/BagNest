@@ -1,157 +1,93 @@
 import { useEffect, useState } from "react";
-import {
-  Link,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { apiFetch } from "../../services/api";
+import { apiFetch, shortTime } from "../../api/api";
 
 function StorageDetails() {
-  // URL-la irukkura storage ID-ah edukkrom
+  // URL-la irukkura storage ID
   const { id } = useParams();
 
-  // Page navigation-ku use pannrom
   const navigate = useNavigate();
 
-  // Backend-la irundhu varra storage data
   const [storage, setStorage] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Error message store panna
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // Page load aagumbothu specific storage fetch pannrom
+  // Backend: GET /storage/{id}
   useEffect(() => {
-    async function fetchStorage() {
-      try {
-        // GET /storage/{storage_id}
-        const data = await apiFetch(`/storage/${id}`);
-
-        // Backend data state-la save pannrom
-        setStorage(data);
-      } catch (error) {
-        // Backend error message show pannrom
-        setErrorMessage(
-          error.message || "Failed to load storage."
-        );
-      } finally {
-        // Loading stop pannrom
-        setIsLoading(false);
-      }
-    }
-
-    fetchStorage();
+    apiFetch(`/storage/${id}`, { auth: false })
+      .then(setStorage)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  // Loading state
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="container py-5">
-        <p className="text-muted">
-          Loading storage details...
-        </p>
+        <p>Loading...</p>
       </div>
     );
   }
 
-  // Storage fetch error
-  if (errorMessage) {
+  // Storage kidaikkalana
+  if (error || !storage) {
     return (
       <div className="container py-5">
-
-        <div className="alert alert-danger">
-          {errorMessage}
-        </div>
+        <h2>Storage not found</h2>
 
         <Link to="/explore-storage">
           Back to Explore Storage
         </Link>
-
-      </div>
-    );
-  }
-
-  // Storage data kidaikkalana
-  if (!storage) {
-    return (
-      <div className="container py-5">
-
-        <h2>
-          Storage not found
-        </h2>
-
-        <Link to="/explore-storage">
-          Back to Explore Storage
-        </Link>
-
       </div>
     );
   }
 
   // Book Now click pannumbothu login check pannrom
   function handleBookNow() {
-    // User login pannirukkaa-nu check pannrom
-    const isLoggedIn =
-      localStorage.getItem("isLoggedIn") === "true";
+    const isLoggedIn = Boolean(localStorage.getItem("token"));
 
-    // Login pannala-na Login page-ku pogum
-    // Storage ID-ah remember pannrom
+    // Login pannala-na Login page-ku pogum, back vara redirect
     if (!isLoggedIn) {
-      navigate(
-        `/login?redirect=/booking/${storage.id}`
-      );
+      navigate(`/login?redirect=/booking/${storage.id}`);
       return;
     }
 
-    // Already login pannirundha Booking page-ku pogum
+    // Partner book panna mudiyaadhu
+    if (localStorage.getItem("userType") !== "traveller") {
+      alert("Only travellers can book storage.");
+      return;
+    }
+
     navigate(`/booking/${storage.id}`);
   }
 
   return (
     <div className="container py-5">
+      <h1 className="fw-bold">{storage.name}</h1>
 
-      {/* Storage name */}
-      <h1 className="fw-bold">
-        {storage.name}
-      </h1>
-
-      {/* Storage location */}
       <p className="text-muted">
-        {storage.city}
+        {storage.address}, {storage.city}
       </p>
 
-      {/* Storage details */}
       <div className="card p-4 mt-4">
-
         <p>
-          <strong>Address:</strong>{" "}
-          {storage.address}
+          <strong>Type:</strong> {storage.storage_type}
         </p>
 
         <p>
-          <strong>Price:</strong>{" "}
-          LKR {storage.price_per_bag} / bag
+          <strong>Opening Hours:</strong>{" "}
+          {shortTime(storage.opening_time)} -{" "}
+          {shortTime(storage.closing_time)}
         </p>
 
         <p>
-          <strong>Capacity:</strong>{" "}
-          {storage.capacity} bags
+          <strong>Price:</strong> LKR {storage.price_per_bag} / bag
         </p>
 
         <p>
-          <strong>Opening Time:</strong>{" "}
-          {storage.opening_time}
+          <strong>Capacity:</strong> {storage.capacity} bags
         </p>
 
-        <p>
-          <strong>Closing Time:</strong>{" "}
-          {storage.closing_time}
-        </p>
-
-        {/* Booking button */}
         <button
           type="button"
           className="btn btn-primary-custom"
@@ -159,17 +95,14 @@ function StorageDetails() {
         >
           Book Now
         </button>
-
       </div>
 
-      {/* Back button */}
       <Link
         to="/explore-storage"
         className="btn btn-link mt-3"
       >
         Back to Explore Storage
       </Link>
-
     </div>
   );
 }

@@ -1,267 +1,147 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { apiFetch } from "../../services/api";
+import { apiFetch, formatDate, formatTime } from "../../api/api";
+
+// Booking status -> Bootstrap badge colour
+const STATUS_STYLE = {
+  CONFIRMED: "text-bg-success",
+  CHECKED_IN: "text-bg-primary",
+  CHECKED_OUT: "text-bg-secondary",
+  CANCELLED: "text-bg-danger",
+};
 
 function MyBookings() {
-  // Backend-la irundhu bookings store panna
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Cancel loading state
-  const [cancellingId, setCancellingId] = useState(null);
-
-  // Error message store panna
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // Success message store panna
-  const [successMessage, setSuccessMessage] = useState("");
-
-  // My bookings fetch pannra function
-  async function fetchBookings() {
+  // Backend: GET /bookings/my
+  async function loadBookings() {
     try {
-      setErrorMessage("");
-
-      // Logged-in traveller bookings fetch pannrom
       const data = await apiFetch("/bookings/my");
-
-      // Backend response save pannrom
       setBookings(data);
-    } catch (error) {
-      setErrorMessage(
-        error.message || "Failed to load bookings."
-      );
+    } catch (err) {
+      setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   }
 
-  // Page load aagumbothu bookings fetch pannrom
   useEffect(() => {
-    fetchBookings();
+    loadBookings();
   }, []);
 
-  // Booking cancel handle pannrom
-  async function handleCancelBooking(bookingId) {
-    // User confirmation
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel this booking?"
-    );
-
-    if (!confirmCancel) {
-      return;
-    }
-
-    // Old messages clear pannrom
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    // Current booking cancel loading
-    setCancellingId(bookingId);
+  // Backend: PUT /bookings/{id}/cancel
+  async function handleCancel(bookingId) {
+    if (!window.confirm("Cancel this booking?")) return;
 
     try {
-      // Backend cancel API call
-      await apiFetch(
-        `/bookings/${bookingId}/cancel`,
-        {
-          method: "PUT",
-        }
-      );
+      await apiFetch(`/bookings/${bookingId}/cancel`, {
+        method: "PUT",
+      });
 
-      // Success message
-      setSuccessMessage(
-        "Booking cancelled successfully."
-      );
-
-      // Updated bookings list fetch pannrom
-      await fetchBookings();
-
-    } catch (error) {
-      // Backend error show pannrom
-      setErrorMessage(
-        error.message || "Failed to cancel booking."
-      );
-
-    } finally {
-      // Cancel loading stop pannrom
-      setCancellingId(null);
+      loadBookings();
+    } catch (err) {
+      setError(err.message);
     }
-  }
-
-  // Loading state
-  if (isLoading) {
-    return (
-      <div className="booking-page py-5">
-
-        <div className="container">
-
-          <h1 className="page-title">
-            My Bookings
-          </h1>
-
-          <p className="text-muted">
-            Loading your bookings...
-          </p>
-
-        </div>
-
-      </div>
-    );
   }
 
   return (
     <div className="booking-page py-5">
-
       <div className="container">
-
-        {/* Page heading */}
-        <h1 className="page-title">
-          My Bookings
-        </h1>
+        <h1 className="page-title">My Bookings</h1>
 
         <p className="page-description">
           View your luggage storage bookings.
         </p>
 
-        {/* Success message */}
-        {successMessage && (
-          <div className="alert alert-success mt-4">
-            {successMessage}
-          </div>
+        {error && (
+          <div className="alert alert-danger">{error}</div>
         )}
 
-        {/* Error message */}
-        {errorMessage && (
-          <div className="alert alert-danger mt-4">
-            {errorMessage}
-          </div>
-        )}
+        {loading && <p>Loading bookings...</p>}
 
-        {/* No bookings */}
-        {!errorMessage &&
-          bookings.length === 0 && (
-            <div className="row mt-4">
+        <div className="row mt-4">
+          {/* Booking illa-na empty state */}
+          {!loading && bookings.length === 0 && (
+            <div className="col-md-6 col-lg-4 mb-4">
+              <div className="empty-state">
+                <h4>No bookings yet</h4>
 
-              <div className="col-md-6 col-lg-4">
+                <p>
+                  You have not made any storage bookings yet.
+                </p>
 
-                <div className="empty-state">
+                <Link
+                  to="/explore-storage"
+                  className="btn btn-primary-custom"
+                >
+                  Explore Storage
+                </Link>
+              </div>
+            </div>
+          )}
 
-                  <h4>
-                    No bookings yet
-                  </h4>
+          {bookings.map((booking) => (
+            <div
+              className="col-md-6 col-lg-4 mb-4"
+              key={booking.id}
+            >
+              <div className="bag-card p-4">
+                <div className="d-flex justify-content-between align-items-start mb-3">
+                  <h5 className="mb-0">
+                    #{booking.reference_code}
+                  </h5>
 
-                  <p>
-                    You have not made any storage
-                    bookings yet.
-                  </p>
-
-                  <Link
-                    to="/explore-storage"
-                    className="btn btn-primary-custom"
+                  <span
+                    className={`badge ${
+                      STATUS_STYLE[booking.status] ||
+                      "text-bg-secondary"
+                    }`}
                   >
-                    Explore Storage
-                  </Link>
-
+                    {booking.status.replace("_", " ")}
+                  </span>
                 </div>
 
-              </div>
+                <p className="mb-2">
+                  <strong>Storage:</strong> {booking.storage_name}
+                </p>
 
-            </div>
-          )}
+                <p className="mb-2">
+                  <strong>Date:</strong>{" "}
+                  {formatDate(booking.start_time)}
+                </p>
 
-        {/* Booking list */}
-        {!errorMessage &&
-          bookings.length > 0 && (
-            <div className="row mt-4">
+                <p className="mb-2">
+                  <strong>Time:</strong>{" "}
+                  {formatTime(booking.start_time)} -{" "}
+                  {formatTime(booking.end_time)}
+                </p>
 
-              {bookings.map((booking) => {
+                <p className="mb-2">
+                  <strong>Bags:</strong> {booking.bags_count}
+                </p>
 
-                // Booking status check pannrom
-                const isCancelled =
-                  booking.status === "CANCELLED";
+                <p className="mb-3">
+                  <strong>Total:</strong> LKR{" "}
+                  {booking.total_price.toFixed(2)}
+                </p>
 
-                return (
-                  <div
-                    className="col-md-6 col-lg-4 mb-4"
-                    key={booking.id}
+                {booking.status === "CONFIRMED" && (
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => handleCancel(booking.id)}
                   >
-
-                    <div className="card p-4 h-100">
-
-                      <h4 className="fw-bold">
-                        Booking #{booking.id}
-                      </h4>
-
-                      <p>
-                        <strong>
-                          Storage ID:
-                        </strong>{" "}
-                        {booking.storage_id}
-                      </p>
-
-                      <p>
-                        <strong>
-                          Bags:
-                        </strong>{" "}
-                        {booking.bags_count}
-                      </p>
-
-                      <p>
-                        <strong>
-                          Start:
-                        </strong>{" "}
-                        {booking.start_time}
-                      </p>
-
-                      <p>
-                        <strong>
-                          End:
-                        </strong>{" "}
-                        {booking.end_time}
-                      </p>
-
-                      <p>
-                        <strong>
-                          Status:
-                        </strong>{" "}
-                        {booking.status}
-                      </p>
-
-                      {/* Cancel button */}
-                      {!isCancelled && (
-                        <button
-                          type="button"
-                          className="btn btn-outline-danger mt-2"
-                          onClick={() =>
-                            handleCancelBooking(
-                              booking.id
-                            )
-                          }
-                          disabled={
-                            cancellingId ===
-                            booking.id
-                          }
-                        >
-                          {cancellingId ===
-                          booking.id
-                            ? "Cancelling..."
-                            : "Cancel Booking"}
-                        </button>
-                      )}
-
-                    </div>
-
-                  </div>
-                );
-              })}
-
+                    Cancel Booking
+                  </button>
+                )}
+              </div>
             </div>
-          )}
-
+          ))}
+        </div>
       </div>
-
     </div>
   );
 }
