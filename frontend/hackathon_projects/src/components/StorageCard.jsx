@@ -1,39 +1,54 @@
 import { Link } from "react-router-dom";
 
 function StorageCard({ storage }) {
-
-  // Oru storage location-a card format-la kaata
   return (
-    <div className="card border-0 shadow-sm h-100">
+    <div className="storage-card">
 
-      <div className="card-body">
+      <div className="storage-card-top">
+        <span className="storage-type">
+          {storage.type}
+        </span>
 
-        {/* Storage name */}
-        <h5 className="fw-bold text-success">
-          {storage.name}
-        </h5>
+        <span className="storage-rating">
+          ★ {storage.rating}
+        </span>
+      </div>
 
-        {/* Storage location */}
-        <p className="text-muted mb-2">
-          📍 {storage.address}, {storage.city}
+      <div className="storage-placeholder">
+        BAG
+      </div>
+
+      <div className="storage-card-body">
+
+        <h3>{storage.name}</h3>
+
+        <p className="storage-location">
+          {storage.location}
         </p>
 
-        {/* Storage price */}
-        <p className="mb-2">
-          <strong>Rs. {storage.price_per_bag}</strong> / bag
-        </p>
+        <div className="storage-meta">
 
-        {/* Storage capacity */}
-        <p className="mb-3">
-          Capacity: {storage.capacity} bags
-        </p>
+          <div>
+            <span>Price</span>
+            <strong>
+              LKR {storage.price} / bag
+            </strong>
+          </div>
 
-        {/* Storage booking page-ku pogum button */}
+          <div>
+            <span>Available</span>
+            <strong>
+              {storage.availableBags} bags
+            </strong>
+          </div>
+
+        </div>
+
         <Link
-          to={`/booking/${storage.id}`}
-          className="btn btn-success w-100"
+          to={`/storage/${storage.id}`}
+          className="storage-card-button"
         >
-          Book Storage
+          View Storage
         </Link>
 
       </div>
