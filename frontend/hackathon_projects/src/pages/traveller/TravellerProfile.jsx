@@ -1,4 +1,16 @@
+import { useState } from "react";
+
 function TravellerProfile() {
+
+  // Profile update message show panna
+  const [showMessage, setShowMessage] = useState(false);
+
+  // Update Profile button click
+  function handleUpdateProfile() {
+    // Success message show pannrom
+    setShowMessage(true);
+  }
+
   return (
     <div className="page-section py-5">
 
@@ -61,12 +73,21 @@ function TravellerProfile() {
                 />
               </div>
 
+              {/* Update Profile button */}
               <button
                 type="button"
                 className="btn btn-primary-custom"
+                onClick={handleUpdateProfile}
               >
                 Update Profile
               </button>
+
+              {/* Success message */}
+              {showMessage && (
+                <div className="alert alert-success mt-3 mb-0">
+                  Profile updated successfully.
+                </div>
+              )}
 
             </div>
 

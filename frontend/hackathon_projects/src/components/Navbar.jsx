@@ -1,23 +1,50 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {Link,useLocation,useNavigate,} from "react-router-dom";
 
 function Navbar() {
-  // Logout complete aana Login page-ku poganum
+  // Logout aana Login page-ku poganum
   const navigate = useNavigate();
 
-  // Logout confirmation handle pannrom
+  // Current page/path-ah check pannrom
+  const location = useLocation();
+
+  // User login pannirukkaa-nu temporary-aa check pannrom
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
+
+  // Login / logout navigation change aagumbothu
+  // Navbar login state-ah update pannrom
+  useEffect(() => {
+    setIsLoggedIn(
+      localStorage.getItem("isLoggedIn") === "true"
+    );
+  }, [location.pathname]);
+
+  // Logout handle pannrom
   function handleLogout() {
-    // User kitta confirmation kekkrom
+    // Logout confirmation kekkrom
     const confirmLogout = window.confirm(
       "Are you sure you want to logout?"
     );
 
-    // User Logout click pannina Login page-ku pogum
+    // User OK kudutha
     if (confirmLogout) {
+
+      // Login state remove pannrom
+      localStorage.removeItem("isLoggedIn");
+
+      // User type remove pannrom
+      localStorage.removeItem("userType");
+
+      // Navbar-la immediately Login / Get Started varanum
+      setIsLoggedIn(false);
+
+      // Login page-ku pogum
       navigate("/login");
     }
   }
 
-  // BagNest main navigation bar
   return (
     <nav className="navbar border-bottom">
 
@@ -34,6 +61,7 @@ function Navbar() {
         {/* Navigation links */}
         <div className="d-flex gap-3 align-items-center">
 
+          {/* Home */}
           <Link
             className="nav-link"
             to="/"
@@ -41,6 +69,7 @@ function Navbar() {
             Home
           </Link>
 
+          {/* Explore Storage */}
           <Link
             className="nav-link"
             to="/explore-storage"
@@ -48,28 +77,37 @@ function Navbar() {
             Explore Storage
           </Link>
 
-          <Link
-            className="nav-link"
-            to="/login"
-          >
-            Login
-          </Link>
+          {/* Login pannala-na */}
+          {!isLoggedIn ? (
+            <>
+              {/* Login */}
+              <Link
+                className="nav-link"
+                to="/login"
+              >
+                Login
+              </Link>
 
-          <Link
-            className="btn btn-primary-custom"
-            to="/register"
-          >
-            Get Started
-          </Link>
-
-          {/* Logout button */}
-          <button
-            type="button"
-            className="btn btn-primary-custom"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+              {/* Register */}
+              <Link
+                className="btn btn-primary-custom"
+                to="/register"
+              >
+                Get Started
+              </Link>
+            </>
+          ) : (
+            <>
+              {/* Login pannirundha Logout mattum */}
+              <button
+                type="button"
+                className="btn btn-primary-custom"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          )}
 
         </div>
 

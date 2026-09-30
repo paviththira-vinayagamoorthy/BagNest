@@ -16,6 +16,12 @@ function Login() {
     // Form submit aagumbothu page refresh aagama stop pannrom
     event.preventDefault();
 
+    // User login pannita temporary-aa login state save pannrom
+    localStorage.setItem("isLoggedIn", "true");
+
+    // Login panna user type-ah save pannrom
+    localStorage.setItem("userType", userType);
+
     // Traveller select pannirundha Traveller Dashboard-ku pogum
     if (userType === "traveller") {
       navigate("/traveller-dashboard");
@@ -70,6 +76,7 @@ function Login() {
                     <option value="partner">
                       Partner
                     </option>
+
                   </select>
 
                 </div>

@@ -1,8 +1,13 @@
-import { Link, useParams } from "react-router-dom";
+import {Link,useNavigate,useParams,} from "react-router-dom";
+
 import storageData from "../../data/storageData";
 
 function StorageDetails() {
+  // URL-la irukkura storage ID-ah edukkrom
   const { id } = useParams();
+
+  // Page navigation-ku use pannrom
+  const navigate = useNavigate();
 
   // Selected storage-ah find panrom
   const storage = storageData.find(
@@ -13,13 +18,34 @@ function StorageDetails() {
   if (!storage) {
     return (
       <div className="container py-5">
-        <h2>Storage not found</h2>
+
+        <h2>
+          Storage not found
+        </h2>
 
         <Link to="/explore-storage">
           Back to Explore Storage
         </Link>
+
       </div>
     );
+  }
+
+  // Book Now click pannumbothu login check pannrom
+  function handleBookNow() {
+    // User login pannirukkaa-nu check pannrom
+    const isLoggedIn =
+      localStorage.getItem("isLoggedIn") === "true";
+
+    // Login pannala-na Login page-ku pogum
+    // Storage ID-ah remember pannrom
+    if (!isLoggedIn) {
+      navigate(`/login?redirect=/booking/${storage.id}`);
+      return;
+    }
+
+    // Already login pannirundha Booking page-ku pogum
+    navigate(`/booking/${storage.id}`);
   }
 
   return (
@@ -39,15 +65,18 @@ function StorageDetails() {
       <div className="card p-4 mt-4">
 
         <p>
-          <strong>Type:</strong> {storage.type}
+          <strong>Type:</strong>{" "}
+          {storage.type}
         </p>
 
         <p>
-          <strong>Rating:</strong> ★ {storage.rating}
+          <strong>Rating:</strong>{" "}
+          ★ {storage.rating}
         </p>
 
         <p>
-          <strong>Price:</strong> LKR {storage.price} / bag
+          <strong>Price:</strong>{" "}
+          LKR {storage.price} / bag
         </p>
 
         <p>
@@ -56,12 +85,13 @@ function StorageDetails() {
         </p>
 
         {/* Booking button */}
-        <Link
-          to={`/booking/${storage.id}`}
+        <button
+          type="button"
           className="btn btn-primary-custom"
+          onClick={handleBookNow}
         >
           Book Now
-        </Link>
+        </button>
 
       </div>
 
