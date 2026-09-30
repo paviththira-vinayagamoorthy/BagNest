@@ -1,36 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
+import { shortTime } from "../api/api";
+
+// Backend StorageResponse fields:
+// id, name, address, city, capacity, price_per_bag,
+// opening_time, closing_time, storage_type, active
 function StorageCard({ storage }) {
-  const navigate = useNavigate();
-
-  // Storage details paakka login check pannrom
-  function handleViewStorage() {
-    const isLoggedIn =
-      localStorage.getItem("isLoggedIn") === "true";
-
-    // Login pannala na Login page-ku pogum
-    if (!isLoggedIn) {
-      navigate("/login");
-      return;
-    }
-
-    // Login aagirundha storage details-ku pogum
-    navigate(`/storage/${storage.id}`);
-  }
-
   return (
     <div className="storage-card">
-
       <div className="storage-card-top">
-
         <span className="storage-type">
-          Storage
+          {storage.storage_type}
         </span>
 
         <span className="storage-rating">
-          ★ {storage.rating || "N/A"}
+          {shortTime(storage.opening_time)} -{" "}
+          {shortTime(storage.closing_time)}
         </span>
-
       </div>
 
       <div className="storage-placeholder">
@@ -38,18 +24,15 @@ function StorageCard({ storage }) {
       </div>
 
       <div className="storage-card-body">
-
         <h3>{storage.name}</h3>
 
         <p className="storage-location">
-          {storage.city}
+          {storage.address}, {storage.city}
         </p>
 
         <div className="storage-meta">
-
           <div>
             <span>Price</span>
-
             <strong>
               LKR {storage.price_per_bag} / bag
             </strong>
@@ -57,22 +40,18 @@ function StorageCard({ storage }) {
 
           <div>
             <span>Capacity</span>
-
             <strong>
               {storage.capacity} bags
             </strong>
           </div>
-
         </div>
 
-        <button
-          type="button"
+        <Link
+          to={`/storage/${storage.id}`}
           className="storage-card-button"
-          onClick={handleViewStorage}
         >
           View Storage
-        </button>
-
+        </Link>
       </div>
     </div>
   );

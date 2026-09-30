@@ -1,52 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { apiFetch } from "../../services/api";
-
 function TravellerDashboard() {
-  // User bookings store panna
-  const [bookings, setBookings] = useState([]);
-
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Error message
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // My bookings fetch pannrom
-  useEffect(() => {
-    async function fetchBookings() {
-      try {
-        const data = await apiFetch("/bookings/my");
-
-        setBookings(data);
-      } catch (error) {
-        setErrorMessage(
-          error.message || "Failed to load dashboard data."
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchBookings();
-  }, []);
-
-  // Total bookings
-  const totalBookings = bookings.length;
-
-  // Cancelled bookings
-  const cancelledBookings = bookings.filter(
-    (booking) =>
-      booking.status === "CANCELLED"
-  ).length;
-
-  // Active bookings
-  const activeBookings = bookings.filter(
-    (booking) =>
-      booking.status !== "CANCELLED"
-  ).length;
-
   return (
     <div className="dashboard-page py-5">
 
@@ -61,92 +15,8 @@ function TravellerDashboard() {
           Welcome to your BagNest dashboard.
         </p>
 
-        {/* Loading */}
-        {isLoading && (
-          <p className="text-muted mt-4">
-            Loading your dashboard...
-          </p>
-        )}
-
-        {/* Error */}
-        {errorMessage && (
-          <div className="alert alert-danger mt-4">
-            {errorMessage}
-          </div>
-        )}
-
-        {/* Booking summary */}
-        {!isLoading && !errorMessage && (
-          <div className="row mt-4">
-
-            {/* Total bookings */}
-            <div className="col-md-4 mb-4">
-
-              <div className="dashboard-card">
-
-                <h4>
-                  Total Bookings
-                </h4>
-
-                <h2 className="fw-bold">
-                  {totalBookings}
-                </h2>
-
-                <p className="mb-0">
-                  All your storage bookings.
-                </p>
-
-              </div>
-
-            </div>
-
-            {/* Active bookings */}
-            <div className="col-md-4 mb-4">
-
-              <div className="dashboard-card">
-
-                <h4>
-                  Active Bookings
-                </h4>
-
-                <h2 className="fw-bold">
-                  {activeBookings}
-                </h2>
-
-                <p className="mb-0">
-                  Your active storage bookings.
-                </p>
-
-              </div>
-
-            </div>
-
-            {/* Cancelled bookings */}
-            <div className="col-md-4 mb-4">
-
-              <div className="dashboard-card">
-
-                <h4>
-                  Cancelled Bookings
-                </h4>
-
-                <h2 className="fw-bold">
-                  {cancelledBookings}
-                </h2>
-
-                <p className="mb-0">
-                  Your cancelled bookings.
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
-        )}
-
         {/* Dashboard options */}
-        <div className="row mt-2">
+        <div className="row mt-4">
 
           {/* Explore Storage */}
           <div className="col-md-4 mb-4">

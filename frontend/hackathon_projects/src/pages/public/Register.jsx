@@ -1,101 +1,83 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { apiFetch } from "../../services/api";
+import { apiFetch } from "../../api/api";
+
+// Backend-ku username venum, aana form-la illa.
+// Email-la irunthu unique username generate pannrom.
+function makeUsername(email) {
+  const base =
+    email
+      .split("@")[0]
+      .replace(/[^a-zA-Z0-9_]/g, "")
+      .slice(0, 35) || "user";
+
+  const suffix = Math.floor(1000 + Math.random() * 9000);
+
+  return `${base}_${suffix}`;
+}
 
 function Register() {
-  // Registration success aana Login page-ku navigate panna use pannrom
   const navigate = useNavigate();
 
-  // Password show / hide panna use pannrom
-  const [showPassword, setShowPassword] = useState(false);
-
-  // Confirm password show / hide panna use pannrom
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
-
-  // Register as-la select panna role store pannrom
-  const [userType, setUserType] = useState("traveller");
-
-  // Full name store panna
+  const [role, setRole] = useState("traveller");
   const [fullName, setFullName] = useState("");
-
-  // Email store panna
   const [email, setEmail] = useState("");
-
-  // Password store panna
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Confirm password store panna
-  const [confirmPassword, setConfirmPassword] =
-    useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Error message show panna
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Register form submit handle pannrom
   async function handleRegister(event) {
-    // Page refresh aagama stop pannrom
     event.preventDefault();
 
-    // Previous error message clear pannrom
-    setErrorMessage("");
+    setError("");
 
-    // Password rendu same-aa irukka check pannrom
-    if (password !== confirmPassword) {
-      setErrorMessage(
-        "Passwords do not match."
-      );
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
       return;
     }
 
-    // Register button loading state
-    setIsLoading(true);
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
-      // Backend register API-ku data send pannrom
+      // Backend: POST /auth/register
       await apiFetch("/auth/register", {
         method: "POST",
-
-        body: JSON.stringify({
-          username: email,
-          email: email,
-          full_name: fullName,
-          password: password,
-          role: userType,
-        }),
+        auth: false,
+        body: {
+          username: makeUsername(email.trim()),
+          email: email.trim(),
+          full_name: fullName.trim(),
+          password,
+          role,
+        },
       });
 
-      // Registration successful aana Login page-ku pogum
+      // Registration complete aana Login page-ku pogum
       navigate("/login");
-
-    } catch (error) {
-      // Backend error message show pannrom
-      setErrorMessage(
-        error.message ||
-        "Registration failed."
-      );
-
+    } catch (err) {
+      setError(err.message);
     } finally {
-      // Loading stop pannrom
-      setIsLoading(false);
+      setLoading(false);
     }
   }
 
   return (
     <div className="register-page">
-
       <div className="container">
-
         <div className="row justify-content-center">
-
           <div className="col-md-7 col-lg-6">
-
             <div className="register-card">
-
               <h2 className="register-title">
                 Create your BagNest account
               </h2>
@@ -104,89 +86,63 @@ function Register() {
                 Create an account to use BagNest.
               </p>
 
-              {/* Register form */}
-              <form onSubmit={handleRegister}>
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
 
+              <form onSubmit={handleRegister}>
                 {/* Account type */}
                 <div className="mb-3">
-
-                  <label className="register-label">
-                    Register as
-                  </label>
+                  <label className="register-label">Register as</label>
 
                   <select
                     className="form-select register-input"
-                    value={userType}
-                    onChange={(event) =>
-                      setUserType(event.target.value)
-                    }
+                    value={role}
+                    onChange={(event) => setRole(event.target.value)}
                   >
-                    <option value="traveller">
-                      Traveller
-                    </option>
-
-                    <option value="partner">
-                      Partner
-                    </option>
+                    <option value="traveller">Traveller</option>
+                    <option value="partner">Partner</option>
                   </select>
-
                 </div>
 
                 {/* Full name */}
                 <div className="mb-3">
-
-                  <label className="register-label">
-                    Full Name
-                  </label>
+                  <label className="register-label">Full Name</label>
 
                   <input
                     type="text"
                     className="form-control register-input"
                     placeholder="Enter your full name"
                     value={fullName}
-                    onChange={(event) =>
-                      setFullName(event.target.value)
-                    }
+                    onChange={(event) => setFullName(event.target.value)}
+                    minLength={2}
                     required
                   />
-
                 </div>
 
                 {/* Email */}
                 <div className="mb-3">
-
-                  <label className="register-label">
-                    Email
-                  </label>
+                  <label className="register-label">Email</label>
 
                   <input
                     type="email"
                     className="form-control register-input"
                     placeholder="Enter your email"
                     value={email}
-                    onChange={(event) =>
-                      setEmail(event.target.value)
-                    }
+                    onChange={(event) => setEmail(event.target.value)}
                     required
                   />
-
                 </div>
 
                 {/* Password */}
                 <div className="mb-3">
-
-                  <label className="register-label">
-                    Password
-                  </label>
+                  <label className="register-label">Password</label>
 
                   <div className="password-wrapper">
-
                     <input
-                      type={
-                        showPassword
-                          ? "text"
-                          : "password"
-                      }
+                      type={showPassword ? "text" : "password"}
                       className="form-control register-input"
                       placeholder="Create a password"
                       value={password}
@@ -196,111 +152,64 @@ function Register() {
                       required
                     />
 
-                    {/* Password show / hide button */}
                     <button
                       type="button"
                       className="password-toggle"
-                      onClick={() =>
-                        setShowPassword(
-                          !showPassword
-                        )
-                      }
+                      onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword
-                        ? "Hide"
-                        : "Show"}
+                      {showPassword ? "Hide" : "Show"}
                     </button>
-
                   </div>
-
                 </div>
 
                 {/* Confirm password */}
                 <div className="mb-4">
-
                   <label className="register-label">
                     Confirm Password
                   </label>
 
                   <div className="password-wrapper">
-
                     <input
-                      type={
-                        showConfirmPassword
-                          ? "text"
-                          : "password"
-                      }
+                      type={showConfirmPassword ? "text" : "password"}
                       className="form-control register-input"
                       placeholder="Confirm your password"
                       value={confirmPassword}
                       onChange={(event) =>
-                        setConfirmPassword(
-                          event.target.value
-                        )
+                        setConfirmPassword(event.target.value)
                       }
                       required
                     />
 
-                    {/* Confirm password show / hide button */}
                     <button
                       type="button"
                       className="password-toggle"
                       onClick={() =>
-                        setShowConfirmPassword(
-                          !showConfirmPassword
-                        )
+                        setShowConfirmPassword(!showConfirmPassword)
                       }
                     >
-                      {showConfirmPassword
-                        ? "Hide"
-                        : "Show"}
+                      {showConfirmPassword ? "Hide" : "Show"}
                     </button>
-
                   </div>
-
                 </div>
 
-                {/* Backend / validation error */}
-                {errorMessage && (
-                  <div className="alert alert-danger">
-                    {errorMessage}
-                  </div>
-                )}
-
-                {/* Create account button */}
                 <button
                   type="submit"
                   className="register-button"
-                  disabled={isLoading}
+                  disabled={loading}
                 >
-                  {isLoading
-                    ? "Creating Account..."
-                    : "Create Account"}
+                  {loading ? "Creating account..." : "Create Account"}
                 </button>
-
               </form>
 
-              {/* Login link */}
               <div className="login-register">
+                <span>Already have an account?</span>
 
-                <span>
-                  Already have an account?
-                </span>
-
-                <Link to="/login">
-                  Login
-                </Link>
-
+                <Link to="/login">Login</Link>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 }

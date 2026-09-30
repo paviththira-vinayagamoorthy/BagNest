@@ -1,39 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { apiFetch } from "../../services/api";
+import { apiFetch } from "../../api/api";
 import StorageCard from "../../components/StorageCard";
 
 import heroImage from "../../assets/hero-illustration.jpg";
 
 function LandingPage() {
-  // Backend storage data
-  const [storageData, setStorageData] = useState([]);
+  // Latest storage locations backend-la irunthu edukkrom
+  const [storages, setStorages] = useState([]);
 
-  // Loading state
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Error message
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // Backend-la storage fetch pannrom
   useEffect(() => {
-    async function fetchStorage() {
-      try {
-        const data = await apiFetch("/storage");
-
-        // First 6 storage locations mattum preview-la show pannrom
-        setStorageData(data.slice(0, 6));
-      } catch (error) {
-        setErrorMessage(
-          error.message || "Failed to load storage."
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchStorage();
+    apiFetch("/storage", { auth: false })
+      .then(setStorages)
+      .catch(() => setStorages([]));
   }, []);
 
   return (
@@ -103,6 +83,7 @@ function LandingPage() {
 
             </div>
 
+
             {/* Right Image */}
             <div className="col-lg-5">
 
@@ -122,6 +103,7 @@ function LandingPage() {
 
         </div>
       </section>
+
 
       {/* Quick Stats */}
       <section className="stats-section">
@@ -162,6 +144,7 @@ function LandingPage() {
         </div>
       </section>
 
+
       {/* Explore Storage Preview */}
       <section className="storage-preview-section">
         <div className="container">
@@ -196,48 +179,19 @@ function LandingPage() {
 
           </div>
 
-          {/* Loading */}
-          {isLoading && (
-            <p className="text-muted">
-              Loading storage...
-            </p>
-          )}
 
-          {/* Error */}
-          {errorMessage && (
-            <div className="alert alert-danger">
-              {errorMessage}
-            </div>
-          )}
+          <div className="row g-4">
 
-          {/* No storage */}
-          {!isLoading &&
-            !errorMessage &&
-            storageData.length === 0 && (
-              <div className="alert alert-info">
-                No storage locations available.
+            {storages.slice(0, 3).map((storage) => (
+              <div
+                className="col-md-6 col-lg-4"
+                key={storage.id}
+              >
+                <StorageCard storage={storage} />
               </div>
-            )}
+            ))}
 
-          {/* Storage cards */}
-          {!isLoading &&
-            !errorMessage &&
-            storageData.length > 0 && (
-              <div className="row g-4">
-
-                {storageData.map((storage) => (
-                  <div
-                    className="col-md-6 col-lg-4"
-                    key={storage.id}
-                  >
-                    <StorageCard
-                      storage={storage}
-                    />
-                  </div>
-                ))}
-
-              </div>
-            )}
+          </div>
 
         </div>
       </section>
