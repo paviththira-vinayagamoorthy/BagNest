@@ -257,6 +257,10 @@ def build_revenue_dataframe(
 
     for booking in bookings:
 
+        # Cancelled bookings must not count as revenue.
+        if booking.status == "CANCELLED":
+            continue
+
         storage = db.get(
             StorageLocation,
             booking.storage_id,

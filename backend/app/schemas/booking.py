@@ -32,3 +32,9 @@ class BookingResponse(BaseModel):
     total_price: float
     status: str
     created_at: datetime
+    storage_name: str | None = None
+
+
+class PartnerBookingResponse(BookingResponse):
+    storage_name: str
+    traveller_name: str

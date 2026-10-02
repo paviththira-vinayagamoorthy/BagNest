@@ -14,6 +14,7 @@ def create_storage(
     price_per_bag: float,
     opening_time,
     closing_time,
+    storage_type: str = "Other",
 ):
 
     if opening_time >= closing_time:
@@ -29,6 +30,7 @@ def create_storage(
         price_per_bag=price_per_bag,
         opening_time=opening_time,
         closing_time=closing_time,
+        storage_type=storage_type,
         active=True,
         partner_id=partner_id,
     )
@@ -124,3 +126,16 @@ def delete_storage(
     db.refresh(storage)
 
     return storage
+
+def get_storage_by_partner(
+    db: Session,
+    partner_id: int,
+):
+    return db.scalars(
+        select(StorageLocation)
+        .where(
+            StorageLocation.partner_id == partner_id,
+            StorageLocation.active == True,
+        )
+        .order_by(StorageLocation.id.desc())
+    ).all()

@@ -31,6 +31,11 @@ class StorageCreate(BaseModel):
 
     closing_time: time
 
+    # storage_type: str = Field(
+    #     default="Other",
+    #     max_length=50,
+    # )
+
 
 class StorageUpdate(BaseModel):
     name: str | None = Field(
@@ -65,6 +70,11 @@ class StorageUpdate(BaseModel):
 
     closing_time: time | None = None
 
+    # storage_type: str | None = Field(
+    #     default=None,
+    #     max_length=50,
+    # )
+
     active: bool | None = None
 
 
@@ -82,5 +92,6 @@ class StorageResponse(BaseModel):
     price_per_bag: float
     opening_time: time
     closing_time: time
+    # storage_type: str
     active: bool
     partner_id: int

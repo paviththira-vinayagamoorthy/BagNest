@@ -16,6 +16,7 @@ from app.services.storage import (
     delete_storage,
     get_all_storage,
     get_storage_by_id,
+    get_storage_by_partner,
     update_storage,
 )
 
@@ -41,6 +42,23 @@ def list_storage(
     return get_all_storage(
         db=db,
         city=city,
+    )
+
+
+@router.get(
+    "/mine",
+    response_model=list[StorageResponse],
+)
+def my_storage(
+    current_user=Depends(
+        require_role("partner", "admin")
+    ),
+    db: Session = Depends(get_db),
+):
+    """Storage locations owned by the logged-in partner."""
+    return get_storage_by_partner(
+        db=db,
+        partner_id=current_user.id,
     )
 
 
@@ -93,6 +111,7 @@ def create_new_storage(
             price_per_bag=data.price_per_bag,
             opening_time=data.opening_time,
             closing_time=data.closing_time,
+            storage_type=data.storage_type,
         )
 
     except ValueError as exc:

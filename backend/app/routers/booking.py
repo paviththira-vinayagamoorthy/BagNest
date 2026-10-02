@@ -5,6 +5,7 @@ from app.database import get_db
 from app.schemas.booking import (
     BookingCreate,
     BookingResponse,
+    PartnerBookingResponse,
 )
 from app.services.auth import get_current_user
 from app.services.booking import (
@@ -12,6 +13,7 @@ from app.services.booking import (
     create_booking,
     get_booking_by_id,
     get_my_bookings,
+    get_partner_bookings,
 )
 
 
@@ -98,6 +100,30 @@ def get_my_booking_list(
     return get_my_bookings(
         db=db,
         traveller_id=current_user.id,
+    )
+
+
+@router.get(
+    "/partner",
+    response_model=list[PartnerBookingResponse],
+)
+def get_partner_booking_list(
+    current_user=Depends(
+        get_current_user
+    ),
+    db: Session = Depends(get_db),
+):
+
+    if current_user.role != "partner":
+
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only partners can view partner bookings",
+        )
+
+    return get_partner_bookings(
+        db=db,
+        partner_id=current_user.id,
     )
 
 

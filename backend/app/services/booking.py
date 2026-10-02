@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
 from app.models.storage import StorageLocation
+from app.models.user import User
 
 
 ACTIVE_BOOKING_STATUSES = {
@@ -256,21 +257,37 @@ def get_my_bookings(
     traveller_id: int,
 ):
     """
-    Return bookings belonging to the current traveller.
+    Return bookings belonging to the current traveller,
+    including the storage name.
     """
-
-    query = (
-        select(Booking)
+    rows = db.execute(
+        select(Booking, StorageLocation.name)
+        .join(
+            StorageLocation,
+            Booking.storage_id == StorageLocation.id,
+        )
         .where(
-            Booking.traveller_id
-            == traveller_id
+            Booking.traveller_id == traveller_id
         )
-        .order_by(
-            Booking.created_at.desc()
-        )
-    )
+        .order_by(Booking.created_at.desc())
+    ).all()
 
-    return db.scalars(query).all()
+    return [
+        {
+            "id": booking.id,
+            "reference_code": booking.reference_code,
+            "traveller_id": booking.traveller_id,
+            "storage_id": booking.storage_id,
+            "bags_count": booking.bags_count,
+            "start_time": booking.start_time,
+            "end_time": booking.end_time,
+            "total_price": booking.total_price,
+            "status": booking.status,
+            "created_at": booking.created_at,
+            "storage_name": storage_name,
+        }
+        for booking, storage_name in rows
+    ]
 
 
 def get_booking_by_id(
@@ -304,3 +321,49 @@ def cancel_booking(
     db.refresh(booking)
 
     return booking
+
+def get_partner_bookings(
+    db: Session,
+    partner_id: int,
+):
+    """
+    Return all bookings made for storage locations
+    owned by this partner, with storage and traveller names.
+    """
+    rows = db.execute(
+        select(
+            Booking,
+            StorageLocation.name,
+            User.full_name,
+        )
+        .join(
+            StorageLocation,
+            Booking.storage_id == StorageLocation.id,
+        )
+        .join(
+            User,
+            Booking.traveller_id == User.id,
+        )
+        .where(
+            StorageLocation.partner_id == partner_id
+        )
+        .order_by(Booking.created_at.desc())
+    ).all()
+
+    return [
+        {
+            "id": booking.id,
+            "reference_code": booking.reference_code,
+            "traveller_id": booking.traveller_id,
+            "storage_id": booking.storage_id,
+            "bags_count": booking.bags_count,
+            "start_time": booking.start_time,
+            "end_time": booking.end_time,
+            "total_price": booking.total_price,
+            "status": booking.status,
+            "created_at": booking.created_at,
+            "storage_name": storage_name,
+            "traveller_name": traveller_name,
+        }
+        for booking, storage_name, traveller_name in rows
+    ]

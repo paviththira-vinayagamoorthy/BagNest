@@ -221,6 +221,17 @@ def import_storage_csv(
                 row["closing_time"]
             )
 
+            storage_type = "Other"
+
+            if "storage_type" in dataframe.columns:
+
+                if not pd.isna(row["storage_type"]):
+
+                    storage_type = (
+                        str(row["storage_type"]).strip()
+                        or "Other"
+                    )
+
             if opening_time >= closing_time:
 
                 raise ValueError(
@@ -235,6 +246,7 @@ def import_storage_csv(
                 price_per_bag=price_per_bag,
                 opening_time=opening_time,
                 closing_time=closing_time,
+                storage_type=storage_type,
                 active=True,
                 partner_id=partner_id,
             )
