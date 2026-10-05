@@ -31,7 +31,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Explicit Origins for CORS Fix
+# CORS Origins Setup
 origins = [
     "https://hackathon-eosin-tau.vercel.app",
     "http://localhost:5173",
@@ -41,9 +41,11 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # Vercel preview links-ukkum set aagum
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 app.include_router(auth.router)
