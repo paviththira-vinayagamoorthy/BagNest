@@ -51,11 +51,11 @@ class StorageLocation(Base):
         nullable=False,
     )
 
-    # storage_type: Mapped[str] = mapped_column(
-    #     String(50),
-    #     nullable=False,
-    #     default="Other",
-    # )
+    storage_type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="Other",
+    )
 
     active: Mapped[bool] = mapped_column(
         Boolean,
