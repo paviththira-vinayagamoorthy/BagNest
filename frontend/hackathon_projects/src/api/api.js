@@ -1,7 +1,8 @@
 // FastAPI backend URL.
 // Change it with a VITE_API_URL variable in frontend/hackathon_projects/.env
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://bagnest-production-abe9.up.railway.app";
 // ---------- Session helpers ----------
 
 export function getToken() {
