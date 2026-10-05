@@ -18,7 +18,7 @@ from app.routers import (
     reports,
 )
 
-# Database Startup Fix (Fail ஆகாம இருக்க try-except)
+# Database Startup Fix
 try:
     Base.metadata.create_all(bind=engine)
     print("Database connection successful & tables created!")
@@ -31,10 +31,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Vercel & Cloud Frontend-க்கு அனுமதி அளிக்கும் வகையில் CORS Updated
+# Explicit Origins for CORS Fix
+origins = [
+    "https://hackathon-eosin-tau.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # அனைத்து Frontend Domain-களுக்கும் அனுமதி அளிக்கும்
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
